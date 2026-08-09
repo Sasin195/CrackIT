@@ -1,0 +1,1014 @@
+{
+  "topics": [
+    "Arrays",
+    "Strings",
+    "Hashing",
+    "Two Pointers",
+    "Sliding Window",
+    "Binary Search",
+    "Linked List",
+    "Stack",
+    "Queue / Deque",
+    "Recursion",
+    "Backtracking",
+    "Trees",
+    "BST",
+    "Heap",
+    "Greedy"
+  ],
+  "topicColors": {
+    "Arrays": "#6366f1",
+    "Strings": "#ec4899",
+    "Hashing": "#8b5cf6",
+    "Two Pointers": "#06b6d4",
+    "Sliding Window": "#0ea5e9",
+    "Binary Search": "#14b8a6",
+    "Linked List": "#f59e0b",
+    "Stack": "#f97316",
+    "Queue / Deque": "#a855f7",
+    "Recursion": "#10b981",
+    "Backtracking": "#d946ef",
+    "Trees": "#22c55e",
+    "BST": "#84cc16",
+    "Heap": "#ef4444",
+    "Greedy": "#eab308"
+  },
+  "difficultyColors": {
+    "Easy": "#10b981",
+    "Medium": "#f59e0b",
+    "Hard": "#ef4444"
+  },
+  "difficultyOrder": {
+    "Easy": 1,
+    "Medium": 2,
+    "Hard": 3
+  },
+  "roadmap": [
+    {
+      "day": 1,
+      "topic": "Arrays Basics",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 1480,
+          "title": "Running Sum of 1d Array",
+          "difficulty": "Easy",
+          "slug": "running-sum-of-1d-array",
+          "topic": "Arrays"
+        },
+        {
+          "number": 1672,
+          "title": "Richest Customer Wealth",
+          "difficulty": "Easy",
+          "slug": "richest-customer-wealth",
+          "topic": "Arrays"
+        },
+        {
+          "number": 1295,
+          "title": "Find Numbers with Even Number of Digits",
+          "difficulty": "Easy",
+          "slug": "find-numbers-with-even-number-of-digits",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "topic": "Arrays",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 1929,
+          "title": "Concatenation of Array",
+          "difficulty": "Easy",
+          "slug": "concatenation-of-array",
+          "topic": "Arrays"
+        },
+        {
+          "number": 1470,
+          "title": "Shuffle the Array",
+          "difficulty": "Easy",
+          "slug": "shuffle-the-array",
+          "topic": "Arrays"
+        },
+        {
+          "number": 66,
+          "title": "Plus One",
+          "difficulty": "Easy",
+          "slug": "plus-one",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "topic": "Arrays",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 283,
+          "title": "Move Zeroes",
+          "difficulty": "Easy",
+          "slug": "move-zeroes",
+          "topic": "Arrays"
+        },
+        {
+          "number": 136,
+          "title": "Single Number",
+          "difficulty": "Easy",
+          "slug": "single-number",
+          "topic": "Arrays"
+        },
+        {
+          "number": 1,
+          "title": "Two Sum",
+          "difficulty": "Easy",
+          "slug": "two-sum",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "topic": "Arrays",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 121,
+          "title": "Best Time to Buy and Sell Stock",
+          "difficulty": "Easy",
+          "slug": "best-time-to-buy-and-sell-stock",
+          "topic": "Arrays"
+        },
+        {
+          "number": 169,
+          "title": "Majority Element",
+          "difficulty": "Easy",
+          "slug": "majority-element",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "topic": "Arrays",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 217,
+          "title": "Contains Duplicate",
+          "difficulty": "Easy",
+          "slug": "contains-duplicate",
+          "topic": "Arrays"
+        },
+        {
+          "number": 219,
+          "title": "Contains Duplicate II",
+          "difficulty": "Easy",
+          "slug": "contains-duplicate-ii",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "topic": "Arrays",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 53,
+          "title": "Maximum Subarray",
+          "difficulty": "Medium",
+          "slug": "maximum-subarray",
+          "topic": "Arrays"
+        },
+        {
+          "number": 238,
+          "title": "Product of Array Except Self",
+          "difficulty": "Medium",
+          "slug": "product-of-array-except-self",
+          "topic": "Arrays"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Redo 3 difficult problems",
+      "problems": []
+    },
+    {
+      "day": 8,
+      "topic": "Strings Basics",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 344,
+          "title": "Reverse String",
+          "difficulty": "Easy",
+          "slug": "reverse-string",
+          "topic": "Strings"
+        },
+        {
+          "number": 541,
+          "title": "Reverse String II",
+          "difficulty": "Easy",
+          "slug": "reverse-string-ii",
+          "topic": "Strings"
+        },
+        {
+          "number": 125,
+          "title": "Valid Palindrome",
+          "difficulty": "Easy",
+          "slug": "valid-palindrome",
+          "topic": "Strings"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "topic": "Strings",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 242,
+          "title": "Valid Anagram",
+          "difficulty": "Easy",
+          "slug": "valid-anagram",
+          "topic": "Strings"
+        },
+        {
+          "number": 387,
+          "title": "First Unique Character in a String",
+          "difficulty": "Easy",
+          "slug": "first-unique-character-in-a-string",
+          "topic": "Strings"
+        },
+        {
+          "number": 383,
+          "title": "Ransom Note",
+          "difficulty": "Easy",
+          "slug": "ransom-note",
+          "topic": "Strings"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "topic": "Strings",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 205,
+          "title": "Isomorphic Strings",
+          "difficulty": "Easy",
+          "slug": "isomorphic-strings",
+          "topic": "Strings"
+        },
+        {
+          "number": 290,
+          "title": "Word Pattern",
+          "difficulty": "Easy",
+          "slug": "word-pattern",
+          "topic": "Strings"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "topic": "Hashing",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 1,
+          "title": "Two Sum",
+          "difficulty": "Easy",
+          "slug": "two-sum",
+          "topic": "Hashing"
+        },
+        {
+          "number": 349,
+          "title": "Intersection of Two Arrays",
+          "difficulty": "Easy",
+          "slug": "intersection-of-two-arrays",
+          "topic": "Hashing"
+        },
+        {
+          "number": 350,
+          "title": "Intersection of Two Arrays II",
+          "difficulty": "Easy",
+          "slug": "intersection-of-two-arrays-ii",
+          "topic": "Hashing"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "topic": "Hashing",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 560,
+          "title": "Subarray Sum Equals K",
+          "difficulty": "Medium",
+          "slug": "subarray-sum-equals-k",
+          "topic": "Hashing"
+        },
+        {
+          "number": 771,
+          "title": "Jewels and Stones",
+          "difficulty": "Easy",
+          "slug": "jewels-and-stones",
+          "topic": "Hashing"
+        }
+      ]
+    },
+    {
+      "day": 13,
+      "topic": "Hashing",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 49,
+          "title": "Group Anagrams",
+          "difficulty": "Medium",
+          "slug": "group-anagrams",
+          "topic": "Hashing"
+        },
+        {
+          "number": 347,
+          "title": "Top K Frequent Elements",
+          "difficulty": "Medium",
+          "slug": "top-k-frequent-elements",
+          "topic": "Hashing"
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Redo difficult problems",
+      "problems": []
+    },
+    {
+      "day": 15,
+      "topic": "Two Pointers",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 167,
+          "title": "Two Sum II - Input Array Is Sorted",
+          "difficulty": "Medium",
+          "slug": "two-sum-ii-input-array-is-sorted",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 125,
+          "title": "Valid Palindrome",
+          "difficulty": "Easy",
+          "slug": "valid-palindrome",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 344,
+          "title": "Reverse String",
+          "difficulty": "Easy",
+          "slug": "reverse-string",
+          "topic": "Two Pointers"
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "topic": "Two Pointers",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 15,
+          "title": "3Sum",
+          "difficulty": "Medium",
+          "slug": "3sum",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 11,
+          "title": "Container With Most Water",
+          "difficulty": "Medium",
+          "slug": "container-with-most-water",
+          "topic": "Two Pointers"
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "topic": "Two Pointers",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 26,
+          "title": "Remove Duplicates from Sorted Array",
+          "difficulty": "Easy",
+          "slug": "remove-duplicates-from-sorted-array",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 27,
+          "title": "Remove Element",
+          "difficulty": "Easy",
+          "slug": "remove-element",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 283,
+          "title": "Move Zeroes",
+          "difficulty": "Easy",
+          "slug": "move-zeroes",
+          "topic": "Two Pointers"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "topic": "Sliding Window",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 643,
+          "title": "Maximum Average Subarray I",
+          "difficulty": "Easy",
+          "slug": "maximum-average-subarray-i",
+          "topic": "Sliding Window"
+        },
+        {
+          "number": 1456,
+          "title": "Maximum Number of Vowels in a Substring of Given Length",
+          "difficulty": "Medium",
+          "slug": "maximum-number-of-vowels-in-a-substring-of-given-length",
+          "topic": "Sliding Window"
+        }
+      ]
+    },
+    {
+      "day": 19,
+      "topic": "Sliding Window",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 3,
+          "title": "Longest Substring Without Repeating Characters",
+          "difficulty": "Medium",
+          "slug": "longest-substring-without-repeating-characters",
+          "topic": "Sliding Window"
+        },
+        {
+          "number": 209,
+          "title": "Minimum Size Subarray Sum",
+          "difficulty": "Medium",
+          "slug": "minimum-size-subarray-sum",
+          "topic": "Sliding Window"
+        }
+      ]
+    },
+    {
+      "day": 20,
+      "topic": "Sliding Window",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 424,
+          "title": "Longest Repeating Character Replacement",
+          "difficulty": "Medium",
+          "slug": "longest-repeating-character-replacement",
+          "topic": "Sliding Window"
+        }
+      ]
+    },
+    {
+      "day": 21,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Two Pointers + Sliding Window",
+      "problems": []
+    },
+    {
+      "day": 22,
+      "topic": "Binary Search",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 704,
+          "title": "Binary Search",
+          "difficulty": "Easy",
+          "slug": "binary-search",
+          "topic": "Binary Search"
+        },
+        {
+          "number": 35,
+          "title": "Search Insert Position",
+          "difficulty": "Easy",
+          "slug": "search-insert-position",
+          "topic": "Binary Search"
+        },
+        {
+          "number": 69,
+          "title": "Sqrt(x)",
+          "difficulty": "Easy",
+          "slug": "sqrtx",
+          "topic": "Binary Search"
+        }
+      ]
+    },
+    {
+      "day": 23,
+      "topic": "Binary Search",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 34,
+          "title": "Find First and Last Position of Element in Sorted Array",
+          "difficulty": "Medium",
+          "slug": "find-first-and-last-position-of-element-in-sorted-array",
+          "topic": "Binary Search"
+        },
+        {
+          "number": 374,
+          "title": "Guess Number Higher or Lower",
+          "difficulty": "Easy",
+          "slug": "guess-number-higher-or-lower",
+          "topic": "Binary Search"
+        }
+      ]
+    },
+    {
+      "day": 24,
+      "topic": "Binary Search",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 33,
+          "title": "Search in Rotated Sorted Array",
+          "difficulty": "Medium",
+          "slug": "search-in-rotated-sorted-array",
+          "topic": "Binary Search"
+        },
+        {
+          "number": 153,
+          "title": "Find Minimum in Rotated Sorted Array",
+          "difficulty": "Medium",
+          "slug": "find-minimum-in-rotated-sorted-array",
+          "topic": "Binary Search"
+        }
+      ]
+    },
+    {
+      "day": 25,
+      "topic": "Binary Search",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 875,
+          "title": "Koko Eating Bananas",
+          "difficulty": "Medium",
+          "slug": "koko-eating-bananas",
+          "topic": "Binary Search"
+        }
+      ]
+    },
+    {
+      "day": 26,
+      "topic": "Linked List",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 206,
+          "title": "Reverse Linked List",
+          "difficulty": "Easy",
+          "slug": "reverse-linked-list",
+          "topic": "Linked List"
+        },
+        {
+          "number": 876,
+          "title": "Middle of the Linked List",
+          "difficulty": "Easy",
+          "slug": "middle-of-the-linked-list",
+          "topic": "Linked List"
+        },
+        {
+          "number": 21,
+          "title": "Merge Two Sorted Lists",
+          "difficulty": "Easy",
+          "slug": "merge-two-sorted-lists",
+          "topic": "Linked List"
+        }
+      ]
+    },
+    {
+      "day": 27,
+      "topic": "Linked List",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 141,
+          "title": "Linked List Cycle",
+          "difficulty": "Easy",
+          "slug": "linked-list-cycle",
+          "topic": "Linked List"
+        },
+        {
+          "number": 142,
+          "title": "Linked List Cycle II",
+          "difficulty": "Medium",
+          "slug": "linked-list-cycle-ii",
+          "topic": "Linked List"
+        }
+      ]
+    },
+    {
+      "day": 28,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Linked List + Binary Search",
+      "problems": []
+    },
+    {
+      "day": 29,
+      "topic": "Stack",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 20,
+          "title": "Valid Parentheses",
+          "difficulty": "Easy",
+          "slug": "valid-parentheses",
+          "topic": "Stack"
+        },
+        {
+          "number": 155,
+          "title": "Min Stack",
+          "difficulty": "Medium",
+          "slug": "min-stack",
+          "topic": "Stack"
+        }
+      ]
+    },
+    {
+      "day": 30,
+      "topic": "Stack",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 496,
+          "title": "Next Greater Element I",
+          "difficulty": "Easy",
+          "slug": "next-greater-element-i",
+          "topic": "Stack"
+        },
+        {
+          "number": 739,
+          "title": "Daily Temperatures",
+          "difficulty": "Medium",
+          "slug": "daily-temperatures",
+          "topic": "Stack"
+        }
+      ]
+    },
+    {
+      "day": 31,
+      "topic": "Stack",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 232,
+          "title": "Implement Queue using Stacks",
+          "difficulty": "Easy",
+          "slug": "implement-queue-using-stacks",
+          "topic": "Stack"
+        },
+        {
+          "number": 225,
+          "title": "Implement Stack using Queues",
+          "difficulty": "Easy",
+          "slug": "implement-stack-using-queues",
+          "topic": "Stack"
+        }
+      ]
+    },
+    {
+      "day": 32,
+      "topic": "Queue / Deque",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 933,
+          "title": "Number of Recent Calls",
+          "difficulty": "Easy",
+          "slug": "number-of-recent-calls",
+          "topic": "Queue / Deque"
+        },
+        {
+          "number": 622,
+          "title": "Design Circular Queue",
+          "difficulty": "Medium",
+          "slug": "design-circular-queue",
+          "topic": "Queue / Deque"
+        }
+      ]
+    },
+    {
+      "day": 33,
+      "topic": "Recursion",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 509,
+          "title": "Fibonacci Number",
+          "difficulty": "Easy",
+          "slug": "fibonacci-number",
+          "topic": "Recursion"
+        },
+        {
+          "number": 70,
+          "title": "Climbing Stairs",
+          "difficulty": "Easy",
+          "slug": "climbing-stairs",
+          "topic": "Recursion"
+        },
+        {
+          "number": 50,
+          "title": "Pow(x, n)",
+          "difficulty": "Medium",
+          "slug": "powx-n",
+          "topic": "Recursion"
+        }
+      ]
+    },
+    {
+      "day": 34,
+      "topic": "Recursion / Backtracking",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 78,
+          "title": "Subsets",
+          "difficulty": "Medium",
+          "slug": "subsets",
+          "topic": "Backtracking"
+        },
+        {
+          "number": 46,
+          "title": "Permutations",
+          "difficulty": "Medium",
+          "slug": "permutations",
+          "topic": "Backtracking"
+        }
+      ]
+    },
+    {
+      "day": 35,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Stack + Recursion",
+      "problems": []
+    },
+    {
+      "day": 36,
+      "topic": "Trees",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 104,
+          "title": "Maximum Depth of Binary Tree",
+          "difficulty": "Easy",
+          "slug": "maximum-depth-of-binary-tree",
+          "topic": "Trees"
+        },
+        {
+          "number": 100,
+          "title": "Same Tree",
+          "difficulty": "Easy",
+          "slug": "same-tree",
+          "topic": "Trees"
+        },
+        {
+          "number": 226,
+          "title": "Invert Binary Tree",
+          "difficulty": "Easy",
+          "slug": "invert-binary-tree",
+          "topic": "Trees"
+        }
+      ]
+    },
+    {
+      "day": 37,
+      "topic": "Trees",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 94,
+          "title": "Binary Tree Inorder Traversal",
+          "difficulty": "Easy",
+          "slug": "binary-tree-inorder-traversal",
+          "topic": "Trees"
+        },
+        {
+          "number": 144,
+          "title": "Binary Tree Preorder Traversal",
+          "difficulty": "Easy",
+          "slug": "binary-tree-preorder-traversal",
+          "topic": "Trees"
+        },
+        {
+          "number": 145,
+          "title": "Binary Tree Postorder Traversal",
+          "difficulty": "Easy",
+          "slug": "binary-tree-postorder-traversal",
+          "topic": "Trees"
+        }
+      ]
+    },
+    {
+      "day": 38,
+      "topic": "Trees",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 102,
+          "title": "Binary Tree Level Order Traversal",
+          "difficulty": "Medium",
+          "slug": "binary-tree-level-order-traversal",
+          "topic": "Trees"
+        },
+        {
+          "number": 543,
+          "title": "Diameter of Binary Tree",
+          "difficulty": "Easy",
+          "slug": "diameter-of-binary-tree",
+          "topic": "Trees"
+        }
+      ]
+    },
+    {
+      "day": 39,
+      "topic": "BST",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 700,
+          "title": "Search in a Binary Search Tree",
+          "difficulty": "Easy",
+          "slug": "search-in-a-binary-search-tree",
+          "topic": "BST"
+        },
+        {
+          "number": 98,
+          "title": "Validate Binary Search Tree",
+          "difficulty": "Medium",
+          "slug": "validate-binary-search-tree",
+          "topic": "BST"
+        }
+      ]
+    },
+    {
+      "day": 40,
+      "topic": "Heap",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 1046,
+          "title": "Last Stone Weight",
+          "difficulty": "Easy",
+          "slug": "last-stone-weight",
+          "topic": "Heap"
+        },
+        {
+          "number": 703,
+          "title": "Kth Largest Element in a Stream",
+          "difficulty": "Easy",
+          "slug": "kth-largest-element-in-a-stream",
+          "topic": "Heap"
+        },
+        {
+          "number": 215,
+          "title": "Kth Largest Element in an Array",
+          "difficulty": "Medium",
+          "slug": "kth-largest-element-in-an-array",
+          "topic": "Heap"
+        }
+      ]
+    },
+    {
+      "day": 41,
+      "topic": "Greedy",
+      "type": "normal",
+      "problems": [
+        {
+          "number": 455,
+          "title": "Assign Cookies",
+          "difficulty": "Easy",
+          "slug": "assign-cookies",
+          "topic": "Greedy"
+        },
+        {
+          "number": 860,
+          "title": "Lemonade Change",
+          "difficulty": "Easy",
+          "slug": "lemonade-change",
+          "topic": "Greedy"
+        }
+      ]
+    },
+    {
+      "day": 42,
+      "topic": "Revision",
+      "type": "revision",
+      "description": "Trees + Heap + Greedy",
+      "problems": []
+    },
+    {
+      "day": 43,
+      "topic": "Mixed",
+      "type": "mixed",
+      "description": "3 problems from weak topics",
+      "problems": [
+        {
+          "number": 15,
+          "title": "3Sum",
+          "difficulty": "Medium",
+          "slug": "3sum",
+          "topic": "Two Pointers"
+        },
+        {
+          "number": 33,
+          "title": "Search in Rotated Sorted Array",
+          "difficulty": "Medium",
+          "slug": "search-in-rotated-sorted-array",
+          "topic": "Binary Search"
+        },
+        {
+          "number": 424,
+          "title": "Longest Repeating Character Replacement",
+          "difficulty": "Medium",
+          "slug": "longest-repeating-character-replacement",
+          "topic": "Sliding Window"
+        }
+      ]
+    },
+    {
+      "day": 44,
+      "topic": "Placement Simulation",
+      "type": "simulation",
+      "description": "2 Medium + 1 Easy",
+      "problems": [
+        {
+          "number": 1,
+          "title": "Two Sum",
+          "difficulty": "Easy",
+          "slug": "two-sum",
+          "topic": "Arrays"
+        },
+        {
+          "number": 53,
+          "title": "Maximum Subarray",
+          "difficulty": "Medium",
+          "slug": "maximum-subarray",
+          "topic": "Arrays"
+        },
+        {
+          "number": 15,
+          "title": "3Sum",
+          "difficulty": "Medium",
+          "slug": "3sum",
+          "topic": "Two Pointers"
+        }
+      ]
+    },
+    {
+      "day": 45,
+      "topic": "Final Revision",
+      "type": "final-revision",
+      "description": "Redo 10 hardest problems",
+      "problems": []
+    }
+  ],
+  "progress": {
+    "progress": {},
+    "notes": {},
+    "reviews": {},
+    "days": {},
+    "streak": {
+      "current": 0,
+      "longest": 0,
+      "lastCompletedDate": null
+    },
+    "simulations": [],
+    "settings": {
+      "theme": "system"
+    },
+    "planCompletedAt": null,
+    "_meta": {
+      "lastModifiedAt": null
+    }
+  }
+}
