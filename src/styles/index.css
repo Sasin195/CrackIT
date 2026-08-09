@@ -262,6 +262,13 @@ h1, h2, h3, h4 {
   color: var(--text-muted);
 }
 
+.navbar-date-chip {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 8px 14px;
+}
+
 .navbar-day-chip {
   background: var(--primary-soft);
   color: var(--primary-soft-text);
