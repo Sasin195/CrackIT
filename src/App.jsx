@@ -25,7 +25,6 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/roadmap" element={<RoadmapPage />} />
-          <Route path="/roadmap/preview" element={<RoadmapPage readOnly />} />
           <Route path="/day/:dayNumber" element={<DayPage />} />
           <Route path="/problem/:problemId" element={<ProblemPage />} />
           <Route path="/progress" element={<ProgressPage />} />

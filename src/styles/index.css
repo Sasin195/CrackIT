@@ -788,6 +788,99 @@ h1, h2, h3, h4 {
   flex-shrink: 0;
 }
 
+.roadmap-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.roadmap-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+.roadmap-group-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.roadmap-group-head h3 {
+  font-size: 16.5px;
+  margin-right: auto;
+}
+.roadmap-day-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.roadmap-day-type {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-soft-text);
+}
+
+.roadmap-problem-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.roadmap-problem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  flex-wrap: wrap;
+}
+.roadmap-problem-number {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 5px 9px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  min-width: 48px;
+  text-align: center;
+}
+.roadmap-problem-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.roadmap-problem-done {
+  color: var(--success);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.roadmap-group-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  padding: 6px 2px;
+}
+.roadmap-group-note > svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .roadmap-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
