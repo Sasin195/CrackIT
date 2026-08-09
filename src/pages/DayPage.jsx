@@ -10,7 +10,9 @@ import {
   FiBookmark,
   FiCalendar,
   FiChevronLeft,
-  FiTrash2
+  FiTrash2,
+  FiLock,
+  FiZap
 } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
 import { ROADMAP, getDayProblems } from "../data/roadmap.js";
@@ -21,7 +23,8 @@ import {
   getDayProblemStats,
   getRevisionProblems,
   getDayWeakProblems,
-  getHardestProblems
+  getHardestProblems,
+  getDayCompletedToday
 } from "../utils/progress.js";
 import PageHeader from "../components/PageHeader.jsx";
 import Card from "../components/Card.jsx";
@@ -29,6 +32,7 @@ import ProblemCard from "../components/ProblemCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import DifficultyBadge from "../components/DifficultyBadge.jsx";
 import EmptyState from "../components/EmptyState.jsx";
+import StreakCard from "../components/StreakCard.jsx";
 
 const leetcodeUrl = (slug) => `https://leetcode.com/problems/${slug}/`;
 
@@ -141,6 +145,9 @@ export default function DayPage() {
   const isFinal = day.type === "final-revision";
   const isMixed = day.type === "mixed";
 
+  const completedToday = getDayCompletedToday(data);
+  const nextDayBlocked = !completed && completedToday !== null && completedToday !== day.day;
+
   const dayStats = getDayProblemStats(data, { ...day, problems });
 
   const toggleSolved = (problem) => {
@@ -185,7 +192,11 @@ export default function DayPage() {
         </div>
         <ProgressBar percent={dayStats.percent} />
         <div className="day-summary-actions">
-          <button className={`btn ${completed ? "btn-outline" : "btn-primary"}`} onClick={handleCompleteDay}>
+          <button
+            className={`btn ${completed ? "btn-outline" : "btn-primary"}`}
+            onClick={handleCompleteDay}
+            disabled={nextDayBlocked}
+          >
             {completed ? <FiRefreshCw /> : <FiCheckCircle />}
             {completed ? "Reopen Day" : "Mark Day Complete"}
           </button>
@@ -198,6 +209,30 @@ export default function DayPage() {
           )}
         </div>
       </div>
+
+      {completed && (
+        <div className="day-completed-banner">
+          <div className="day-completed-streak">
+            <FiZap />
+            <span>
+              Day {day.day} complete! You're on a <strong>{data.streak.current}-day streak</strong>.
+            </span>
+          </div>
+          <StreakCard streak={data.streak} compact />
+        </div>
+      )}
+
+      {nextDayBlocked && (
+        <div className="day-locked-banner">
+          <FiLock />
+          <div>
+            <strong>Day complete for today</strong>
+            <p>
+              You already completed Day {completedToday}. Come back tomorrow to continue your streak — one day at a time.
+            </p>
+          </div>
+        </div>
+      )}
 
       {isRevision && (
         <Card

@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { getAppData, saveAppData, DEFAULT_DATA } from "../utils/storage.js";
-import { updateStreak } from "../utils/progress.js";
+import { updateStreak, getDayCompletedToday } from "../utils/progress.js";
 import { ROADMAP } from "../data/roadmap.js";
 import { todayDateKey, uid } from "../utils/helpers.js";
 import { toast } from "../utils/toast.js";
@@ -11,28 +11,33 @@ const bump = (next) => ({ ...next, _meta: { lastModifiedAt: Date.now() } });
 
 export function AppProvider({ children }) {
   const [data, setData] = useState(() => getAppData());
+  const dataRef = useRef(data);
 
   useEffect(() => {
     saveAppData(data);
+    dataRef.current = data;
   }, [data]);
 
   const setProblemSolved = useCallback((progressKey, solved) => {
-    setData((current) => {
-      const progress = { ...current.progress };
-      if (solved) progress[progressKey] = "solved";
-      else delete progress[progressKey];
-      let next = { ...current, progress };
+    const current = dataRef.current;
+    const progress = { ...current.progress };
+    if (solved) progress[progressKey] = "solved";
+    else delete progress[progressKey];
+    let next = { ...current, progress };
 
-      const match = /^day(\d+)-problem\d+$/.exec(progressKey);
-      if (match && solved) {
-        const dayNumber = Number(match[1]);
-        const day = ROADMAP.find((d) => d.day === dayNumber);
-        if (
-          day &&
-          day.problems &&
-          day.problems.length > 0 &&
-          day.problems.every((problem) => progress[problem.progressKey])
-        ) {
+    let dayBlocked = false;
+    const match = /^day(\d+)-problem\d+$/.exec(progressKey);
+    if (match && solved) {
+      const dayNumber = Number(match[1]);
+      const day = ROADMAP.find((d) => d.day === dayNumber);
+      if (
+        day &&
+        day.problems &&
+        day.problems.length > 0 &&
+        day.problems.every((problem) => progress[problem.progressKey])
+      ) {
+        const completedToday = getDayCompletedToday(next);
+        if (completedToday === null || completedToday === dayNumber) {
           next = {
             ...next,
             days: {
@@ -41,11 +46,17 @@ export function AppProvider({ children }) {
             },
             streak: updateStreak(next.streak)
           };
+        } else {
+          dayBlocked = true;
         }
       }
-      return bump(next);
-    });
-    toast(solved ? "Marked as solved" : "Marked as not solved", solved ? "success" : "info");
+    }
+    setData(bump(next));
+    if (dayBlocked) {
+      toast(`You already completed Day ${getDayCompletedToday(next)} today — come back tomorrow to keep your streak alive!`, "warning");
+    } else {
+      toast(solved ? "Marked as solved" : "Marked as not solved", solved ? "success" : "info");
+    }
   }, []);
 
   const setProblemReview = useCallback((progressKey, review) => {
@@ -77,18 +88,25 @@ export function AppProvider({ children }) {
   }, []);
 
   const completeDay = useCallback((dayNumber, mode = "auto") => {
-    setData((current) => {
-      if (current.days[dayNumber]?.completed) return current;
-      return bump({
+    const current = dataRef.current;
+    if (current.days[dayNumber]?.completed) return;
+    const completedToday = getDayCompletedToday(current);
+    if (completedToday !== null && completedToday !== Number(dayNumber)) {
+      toast(`Day ${completedToday} already completed today — come back tomorrow to keep your streak alive!`, "warning");
+      return;
+    }
+    const streak = updateStreak(current.streak);
+    setData(
+      bump({
         ...current,
         days: {
           ...current.days,
           [dayNumber]: { completed: true, completedDate: todayDateKey(), mode }
         },
-        streak: updateStreak(current.streak)
-      });
-    });
-    toast(`Day ${dayNumber} completed!`);
+        streak
+      })
+    );
+    toast(`Day ${dayNumber} completed! 🔥 ${streak.current}-day streak`, "success");
   }, []);
 
   const uncompleteDay = useCallback((dayNumber) => {

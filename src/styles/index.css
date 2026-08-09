@@ -853,6 +853,57 @@ h1, h2, h3, h4 {
   color: var(--text-muted);
 }
 
+.day-completed-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--success-soft);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.day-completed-streak {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+}
+.day-completed-streak > svg {
+  color: var(--warning);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.day-completed-streak strong {
+  color: var(--success);
+}
+
+.day-locked-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--warning-soft);
+  border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.day-locked-banner > svg {
+  color: var(--warning);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.day-locked-banner strong {
+  font-size: 14.5px;
+}
+.day-locked-banner p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
 .day-footer {
   display: flex;
   justify-content: space-between;

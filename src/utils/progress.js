@@ -13,6 +13,13 @@ export function isDayCompleted(data, dayNumber) {
   return Boolean(data.days?.[dayNumber]?.completed);
 }
 
+export function getDayCompletedToday(data, today = todayDateKey()) {
+  for (const [dayNumber, info] of Object.entries(data.days || {})) {
+    if (info.completed && info.completedDate === today) return Number(dayNumber);
+  }
+  return null;
+}
+
 export function isDayCompleteFromProblems(data, day) {
   if (!day.problems || day.problems.length === 0) return false;
   return day.problems.every((problem) => isProblemSolved(data, problem.progressKey));
