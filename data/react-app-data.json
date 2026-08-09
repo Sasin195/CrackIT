@@ -1,0 +1,282 @@
+{
+  "courseId": "react",
+  "title": "15-Day React Mastery",
+  "subtitle": "Learn React from scratch — one day at a time",
+  "roadmap": [
+    {
+      "day": 1,
+      "topic": "Introduction and React Basics",
+      "type": "learning",
+      "videoRange": "0:00 – 1:20",
+      "description": "Understand what React is, why it's used, and set up your first app.",
+      "learnTopics": [
+        "Introduction to React",
+        "What React is",
+        "Why React is used",
+        "React basics"
+      ],
+      "problems": [
+        { "number": 1, "title": "Set up React", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Create a basic React application", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 2,
+      "topic": "JSX and Core Concepts",
+      "type": "learning",
+      "videoRange": "1:20 – 40:16",
+      "description": "Master JSX syntax and how JavaScript works inside JSX.",
+      "learnTopics": [
+        "JSX",
+        "JSX syntax",
+        "JavaScript inside JSX",
+        "React elements",
+        "Basic React concepts"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create JSX components", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Practice JavaScript expressions inside JSX", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 3,
+      "topic": "Components and Props",
+      "type": "learning",
+      "videoRange": "40:16 – 1:11:58",
+      "description": "Build reusable functional components and pass data with props.",
+      "learnTopics": [
+        "Components",
+        "Functional components",
+        "Reusable components",
+        "Props",
+        "Passing data using props"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create reusable components", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Pass different data through props", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 4,
+      "topic": "Chatbot Project and Advanced Props",
+      "type": "project",
+      "videoRange": "1:11:58 – 1:36:49",
+      "description": "Start the Chatbot project and learn advanced prop patterns and component communication.",
+      "learnTopics": [
+        "Start Chatbot project",
+        "Project structure",
+        "Advanced props",
+        "Component communication"
+      ],
+      "problems": [
+        { "number": 1, "title": "Build the initial chatbot UI", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Create reusable chatbot components", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 5,
+      "topic": "State and Event Handlers",
+      "type": "learning",
+      "videoRange": "1:36:49 – 2:11:01",
+      "description": "Use useState, handle events, and make components re-render with state.",
+      "learnTopics": [
+        "State",
+        "useState",
+        "Event handlers",
+        "Updating state",
+        "Re-rendering"
+      ],
+      "problems": [
+        { "number": 1, "title": "Build interactive components", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Practice state updates", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Handle button and user events", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 6,
+      "topic": "Chatbot Features with State",
+      "type": "project",
+      "videoRange": "2:11:01 – 2:42:41",
+      "description": "Use state in the real chatbot project — manage conversations and dynamic UI.",
+      "learnTopics": [
+        "Using state in a real project",
+        "Chatbot interactions",
+        "Managing conversation data",
+        "Dynamic UI updates"
+      ],
+      "problems": [
+        { "number": 1, "title": "Continue chatbot project", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Add message functionality", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Make the chatbot interactive", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 7,
+      "topic": "CSS in React and Hooks",
+      "type": "learning",
+      "videoRange": "2:42:41 – 3:48:49",
+      "description": "Style components and learn hook fundamentals including useEffect.",
+      "learnTopics": [
+        "CSS in React",
+        "Styling components",
+        "React Hooks",
+        "Hook fundamentals",
+        "useEffect and related concepts"
+      ],
+      "problems": [
+        { "number": 1, "title": "Style React components", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Practice React Hooks", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Improve chatbot UI", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 8,
+      "topic": "Professional Setup with Vite",
+      "type": "learning",
+      "videoRange": "3:48:49 – 4:59:29",
+      "description": "Set up a professional React project with Vite and learn the development workflow.",
+      "learnTopics": [
+        "Vite",
+        "Professional React project setup",
+        "Project structure",
+        "Development workflow"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create a React project using Vite", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Organize a professional React project", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Run and build the project", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 9,
+      "topic": "React Router, Git, and E-commerce Setup",
+      "type": "project",
+      "videoRange": "4:59:29 – 6:09:59",
+      "description": "Add routing and navigation, learn Git basics, and scaffold the e-commerce project.",
+      "learnTopics": [
+        "React Router",
+        "Routing",
+        "Navigation",
+        "Git basics",
+        "E-commerce project setup"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create multiple pages", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Add navigation", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Create an e-commerce project structure", "difficulty": "Easy", "topic": "React" },
+        { "number": 4, "title": "Practice Git commands", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 10,
+      "topic": "Backend Connectivity and Data Fetching",
+      "type": "learning",
+      "videoRange": "6:09:59 – 7:30:28",
+      "description": "Connect React to an API and fetch data with HTTP requests.",
+      "learnTopics": [
+        "Backend connectivity",
+        "APIs",
+        "Data fetching",
+        "HTTP requests",
+        "Fetching data in React"
+      ],
+      "problems": [
+        { "number": 1, "title": "Connect React to an API", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Fetch product data", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Display API data dynamically", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 11,
+      "topic": "Advanced Data Fetching and async/await",
+      "type": "learning",
+      "videoRange": "7:30:28 – 8:00:58",
+      "description": "Handle asynchronous operations cleanly with async/await and promises.",
+      "learnTopics": [
+        "Advanced data fetching",
+        "async/await",
+        "Promises",
+        "Handling asynchronous operations"
+      ],
+      "problems": [
+        { "number": 1, "title": "Fetch data using async/await", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Handle loading and error states", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Work with API responses", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 12,
+      "topic": "Data Mutation and E-commerce Interactions",
+      "type": "project",
+      "videoRange": "8:00:58 – 8:50:10",
+      "description": "Mutate data with POST/PUT/DELETE and build cart interactions in the e-commerce app.",
+      "learnTopics": [
+        "Data mutation",
+        "POST/PUT/DELETE concepts",
+        "E-commerce interactions",
+        "Managing application data"
+      ],
+      "problems": [
+        { "number": 1, "title": "Add product interactions", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Implement cart-related functionality", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Practice modifying API data", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 13,
+      "topic": "Automated Testing with Vitest",
+      "type": "learning",
+      "videoRange": "8:50:10 – 9:50:31",
+      "description": "Write automated tests for your React code with Vitest.",
+      "learnTopics": [
+        "Automated testing",
+        "Vitest",
+        "Test cases",
+        "Testing React functionality"
+      ],
+      "problems": [
+        { "number": 1, "title": "Install/configure Vitest", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Write basic tests", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Test React components/functions", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 14,
+      "topic": "Deployment with AWS",
+      "type": "learning",
+      "videoRange": "9:50:31 – 10:41:06",
+      "description": "Build for production and deploy your React app on AWS.",
+      "learnTopics": [
+        "Production build",
+        "Deployment",
+        "AWS",
+        "Hosting React applications"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create production build", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Deploy a React application", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Understand deployment workflow", "difficulty": "Easy", "topic": "React" }
+      ]
+    },
+    {
+      "day": 15,
+      "topic": "React 19, TypeScript, AI Features, and Conclusion",
+      "type": "final",
+      "videoRange": "10:41:06 – 11:32:04",
+      "description": "Modern React with TypeScript and AI features, plus the final challenge.",
+      "learnTopics": [
+        "React 19",
+        "TypeScript with React",
+        "AI features",
+        "Modern React concepts",
+        "Course conclusion"
+      ],
+      "problems": [
+        { "number": 1, "title": "Create a small React + TypeScript component", "difficulty": "Easy", "topic": "React" },
+        { "number": 2, "title": "Review the complete React roadmap", "difficulty": "Easy", "topic": "React" },
+        { "number": 3, "title": "Build a small feature independently", "difficulty": "Easy", "topic": "React" },
+        { "number": 4, "title": "Final Challenge — build a small app without following the tutorial", "difficulty": "Medium", "topic": "React" }
+      ]
+    }
+  ]
+}

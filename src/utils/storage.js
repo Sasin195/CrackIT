@@ -12,7 +12,12 @@ export const DEFAULT_DATA = {
   },
   simulations: [],
   settings: {
-    theme: "system"
+    theme: "system",
+    course: "dsa",
+    started: {
+      dsa: false,
+      react: false
+    }
   },
   planCompletedAt: null,
   todayCompleted: null,

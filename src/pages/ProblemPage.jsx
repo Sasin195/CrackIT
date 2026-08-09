@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { FiChevronLeft, FiBook } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
-import { findProblem, ROADMAP } from "../data/roadmap.js";
+import { findProblem, getCourse } from "../data/roadmap.js";
 import { isProblemSolved, isProblemReview } from "../utils/progress.js";
 import ProblemCard from "../components/ProblemCard.jsx";
 import PageHeader from "../components/PageHeader.jsx";
@@ -10,9 +10,10 @@ import EmptyState from "../components/EmptyState.jsx";
 export default function ProblemPage() {
   const { problemId } = useParams();
   const { data, setProblemSolved, setProblemReview, saveNote } = useApp();
-  const problem = findProblem(problemId);
+  const course = getCourse(data.settings.course);
+  const problem = findProblem(problemId, course.roadmap);
 
-  const day = ROADMAP.find((d) => d.problems?.some((prob) => prob.progressKey === problemId));
+  const day = course.roadmap.find((d) => d.problems?.some((prob) => prob.progressKey === problemId));
 
   if (!problem) {
     return (

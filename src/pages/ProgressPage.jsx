@@ -13,7 +13,7 @@ import {
   getWeakTopics,
   getSimulationAccuracy
 } from "../utils/progress.js";
-import { DIFFICULTY_COLORS } from "../data/roadmap.js";
+import { DIFFICULTY_COLORS, getCourse } from "../data/roadmap.js";
 import Card from "../components/Card.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -30,13 +30,14 @@ const DIFFICULTIES = [
 
 export default function ProgressPage() {
   const { data } = useApp();
-  const progress = calculateProgress(data);
+  const course = getCourse(data.settings.course);
+  const progress = calculateProgress(data, course);
   const weakTopics = getWeakTopics(data, 3);
   const accuracy = getSimulationAccuracy(data);
 
   return (
     <>
-      <PageHeader title="Progress Dashboard" subtitle="Your complete preparation overview, calculated live from your local progress." />
+      <PageHeader title="Progress Dashboard" subtitle={`${course.title} — your complete overview, calculated live from your local progress.`} />
 
       <div className="overall-grid">
         <Card className="overall-card">
@@ -54,80 +55,84 @@ export default function ProgressPage() {
           <div className="overall-head">
             <span className="chip chip-success">
               <FiCode />
-              Problems
+              {course.unit}
             </span>
             <strong>{progress.problemsSolved} / {progress.totalProblems}</strong>
           </div>
           <ProgressBar percent={progress.problemsPercent} color={DIFFICULTY_COLORS.Easy} />
-          <p className="overall-label">{Math.round(progress.problemsPercent)}% of all problems solved</p>
+          <p className="overall-label">{Math.round(progress.problemsPercent)}% of all {course.unit.toLowerCase()} completed</p>
         </Card>
       </div>
 
       <div className="stats-grid">
         <StatCard icon={FiCalendar} label="Days Completed" value={progress.daysCompleted} sub={`of ${progress.totalDays} days`} tone="primary" />
-        <StatCard icon={FiCode} label="Problems Solved" value={progress.problemsSolved} sub={`of ${progress.totalProblems}`} tone="green" />
-        <StatCard icon={FiStar} label="Needs Review" value={progress.problemsToReview} sub="problems flagged" tone="warning" />
+        <StatCard icon={FiCode} label={course.unit} value={progress.problemsSolved} sub={`of ${progress.totalProblems}`} tone="green" />
+        <StatCard icon={FiStar} label="Needs Review" value={progress.problemsToReview} sub={`${course.unit.toLowerCase()} flagged`} tone="warning" />
         <StatCard icon={FiZap} label="Current Streak" value={data.streak.current} sub={`best ${data.streak.longest}`} tone="green" />
       </div>
 
-      <h2 className="section-title">Difficulty Statistics</h2>
-      <div className="difficulty-grid">
-        {DIFFICULTIES.map(({ key, emoji }) => {
-          const stats = progress.difficultyStats[key];
-          return (
-            <Card key={key} className="difficulty-card">
-              <div className="difficulty-head">
-                <span>
-                  {emoji} {key}
-                </span>
-                <strong>{stats.solved} / {stats.total}</strong>
-              </div>
-              <ProgressBar percent={stats.percent} color={DIFFICULTY_COLORS[key]} />
-            </Card>
-          );
-        })}
-      </div>
-
-      <h2 className="section-title">Topic Progress</h2>
-      <Card>
-        <div className="topic-progress-list">
-          {Object.entries(progress.topicStats).map(([topic, stats]) => (
-            <TopicProgress key={topic} topic={topic} stats={stats} />
-          ))}
-        </div>
-      </Card>
-
-      <h2 className="section-title">Weak Topics</h2>
-      {weakTopics.length === 0 ? (
-        <EmptyState
-          icon={FiTrendingUp}
-          title="No weak topics"
-          text="Everything looks strong. Keep it up!"
-        />
-      ) : (
-        <Card>
-          <div className="weak-topics-list">
-            {weakTopics.map((item, index) => (
-              <div key={item.topic} className="weak-topic-row">
-                <span className="weak-rank">{index + 1}</span>
-                <div className="weak-topic-info">
-                  <strong>{item.topic}</strong>
-                  <span className={`weak-status weak-${item.status.toLowerCase().replace(/\s+/g, "-")}`}>
-                    {item.status}
-                  </span>
-                </div>
-                <div className="weak-topic-stats">
-                  <span>{item.solved}/{item.total} solved</span>
-                  {item.review > 0 && <span>{item.review} in review</span>}
-                </div>
-                <Link to="/roadmap" className="btn btn-ghost btn-sm">
-                  Practice
-                  <FiArrowRight />
-                </Link>
-              </div>
-            ))}
+      {course.hasTopics && (
+        <>
+          <h2 className="section-title">Difficulty Statistics</h2>
+          <div className="difficulty-grid">
+            {DIFFICULTIES.map(({ key, emoji }) => {
+              const stats = progress.difficultyStats[key];
+              return (
+                <Card key={key} className="difficulty-card">
+                  <div className="difficulty-head">
+                    <span>
+                      {emoji} {key}
+                    </span>
+                    <strong>{stats.solved} / {stats.total}</strong>
+                  </div>
+                  <ProgressBar percent={stats.percent} color={DIFFICULTY_COLORS[key]} />
+                </Card>
+              );
+            })}
           </div>
-        </Card>
+
+          <h2 className="section-title">Topic Progress</h2>
+          <Card>
+            <div className="topic-progress-list">
+              {Object.entries(progress.topicStats).map(([topic, stats]) => (
+                <TopicProgress key={topic} topic={topic} stats={stats} />
+              ))}
+            </div>
+          </Card>
+
+          <h2 className="section-title">Weak Topics</h2>
+          {weakTopics.length === 0 ? (
+            <EmptyState
+              icon={FiTrendingUp}
+              title="No weak topics"
+              text="Everything looks strong. Keep it up!"
+            />
+          ) : (
+            <Card>
+              <div className="weak-topics-list">
+                {weakTopics.map((item, index) => (
+                  <div key={item.topic} className="weak-topic-row">
+                    <span className="weak-rank">{index + 1}</span>
+                    <div className="weak-topic-info">
+                      <strong>{item.topic}</strong>
+                      <span className={`weak-status weak-${item.status.toLowerCase().replace(/\s+/g, "-")}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                    <div className="weak-topic-stats">
+                      <span>{item.solved}/{item.total} solved</span>
+                      {item.review > 0 && <span>{item.review} in review</span>}
+                    </div>
+                    <Link to="/roadmap" className="btn btn-ghost btn-sm">
+                      Practice
+                      <FiArrowRight />
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+        </>
       )}
 
       {accuracy !== null && (

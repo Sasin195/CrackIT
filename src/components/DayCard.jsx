@@ -4,14 +4,15 @@ import { getDayProblemStats, isDayCompleted } from "../utils/progress.js";
 import { cn } from "../utils/helpers.js";
 
 export default function DayCard({ day, data, isCurrent, locked }) {
-  const completed = isDayCompleted(data, day.day);
+  const completed = isDayCompleted(data, day);
   const stats = getDayProblemStats(data, day);
   const isRevision = day.type === "revision";
   const isSimulation = day.type === "simulation";
   const isMixed = day.type === "mixed";
   const isFinal = day.type === "final-revision";
   const hasProblems = stats.total > 0;
-  const countLabel = isRevision || isFinal ? "Revision" : isSimulation ? "Simulation" : isMixed ? "Mixed Set" : `${stats.total} Problems`;
+  const unit = day.courseId === "react" ? "Tasks" : "Problems";
+  const countLabel = isRevision || isFinal ? "Revision" : isSimulation ? "Simulation" : isMixed ? "Mixed Set" : `${stats.total} ${unit}`;
 
   const linkTo = isSimulation ? "/placement" : `/day/${day.day}`;
 

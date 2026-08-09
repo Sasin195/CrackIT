@@ -12,7 +12,7 @@ import {
   FiAlertTriangle
 } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
-import { getAllProblems } from "../data/roadmap.js";
+import { getAllProblems, getCourse } from "../data/roadmap.js";
 import { getStudiedTopics, getWeakTopics } from "../utils/progress.js";
 import { formatTime, shuffle, pickRandom } from "../utils/helpers.js";
 import PageHeader from "../components/PageHeader.jsx";
@@ -44,6 +44,7 @@ function generateQuestions(data) {
 
 export default function PlacementPage() {
   const { data, recordSimulation } = useApp();
+  const course = getCourse(data.settings.course);
   const [phase, setPhase] = useState("intro");
   const [questions, setQuestions] = useState([]);
   const [elapsed, setElapsed] = useState(0);
@@ -98,6 +99,24 @@ export default function PlacementPage() {
   };
 
   const allAnswered = questions.length > 0 && questions.every((q) => q.status !== "pending");
+
+  if (course.id !== "dsa") {
+    return (
+      <>
+        <PageHeader title="Placement Simulation" subtitle="1 Easy + 2 Medium under real time pressure." />
+        <EmptyState
+          icon={FiTarget}
+          title="DSA only"
+          text="The placement simulation is part of the 45-Day DSA course. Switch to DSA in the top bar to use it."
+          action={
+            <Link to="/" className="btn btn-primary">
+              Back to Home
+            </Link>
+          }
+        />
+      </>
+    );
+  }
 
   return (
     <>

@@ -12,14 +12,16 @@ import {
   FiChevronLeft,
   FiTrash2,
   FiLock,
-  FiZap
+  FiZap,
+  FiPlayCircle
 } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
-import { ROADMAP, getDayProblems } from "../data/roadmap.js";
+import { getCourse, getDayProblems } from "../data/roadmap.js";
 import {
   isProblemSolved,
   isProblemReview,
   isDayCompleted,
+  isCourseStarted,
   getDayProblemStats,
   getRevisionProblems,
   getDayWeakProblems,
@@ -54,10 +56,12 @@ function RevisionItem({ problem, data, onReSolved, onUnderstood, onKeep, onNoteC
         {solved && <FiCheckCircle className="problem-solved-icon" />}
       </div>
       <div className="problem-actions">
-        <a href={leetcodeUrl(problem.slug)} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
-          <FiExternalLink />
-          Open LeetCode
-        </a>
+        {problem.slug && (
+          <a href={leetcodeUrl(problem.slug)} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
+            <FiExternalLink />
+            Open LeetCode
+          </a>
+        )}
         <button onClick={() => onReSolved(problem)} className="btn btn-primary btn-sm">
           <FiCheckCircle />
           Mark Re-solved
@@ -94,7 +98,9 @@ export default function DayPage() {
   const location = useLocation();
   const { data, setProblemSolved, setProblemReview, saveNote, completeDay, uncompleteDay, markUnderstood } = useApp();
 
-  const day = ROADMAP.find((d) => d.day === Number(dayNumber));
+  const course = getCourse(data.settings.course);
+  const roadmap = course.roadmap;
+  const day = roadmap.find((d) => d.day === Number(dayNumber));
 
   const rawProblems = useMemo(() => {
     if (!day) return [];
@@ -142,15 +148,42 @@ export default function DayPage() {
     return null;
   }
 
-  const completed = isDayCompleted(data, day.day);
+  if (!isCourseStarted(data, course.id)) {
+    return (
+      <>
+        <div className="back-link">
+          <Link to="/roadmap">
+            <FiChevronLeft />
+            Back to Roadmap
+          </Link>
+        </div>
+        <EmptyState
+          icon={FiLock}
+          title="Course not started"
+          text={`Day ${day.day} is locked until you start the challenge. Press Start on the dashboard to unlock Day 1 and begin tracking.`}
+          action={
+            <Link to="/" className="btn btn-primary">
+              Start the Challenge
+            </Link>
+          }
+        />
+      </>
+    );
+  }
+
+  const completed = isDayCompleted(data, day);
   const isRevision = day.type === "revision";
   const isFinal = day.type === "final-revision";
   const isMixed = day.type === "mixed";
+  const isReact = day.courseId === "react";
 
-  const completedToday = getDayCompletedToday(data);
+  const completedToday = getDayCompletedToday(data, course.id);
   const nextDayBlocked = !completed && completedToday !== null && completedToday !== day.day;
 
   const dayStats = getDayProblemStats(data, { ...day, problems });
+
+  const prevDay = roadmap.find((d) => d.day === day.day - 1);
+  const nextDay = roadmap.find((d) => d.day === day.day + 1);
 
   const toggleSolved = (problem) => {
     setProblemSolved(problem.progressKey, !isProblemSolved(data, problem.progressKey));
@@ -178,10 +211,18 @@ export default function DayPage() {
         title={`Day ${day.day}`}
         subtitle={`${day.topic}${day.description ? ` — ${day.description}` : ""}`}
         actions={
-          <span className={`chip ${completed ? "chip-success" : "chip-upcoming"}`}>
-            {completed ? <FiCheckCircle /> : <FiFlag />}
-            {completed ? "Completed" : day.type === "revision" ? "Revision Day" : day.type === "final-revision" ? "Final Revision" : "In Progress"}
-          </span>
+          <>
+            {day.videoRange && (
+              <span className="chip chip-primary">
+                <FiPlayCircle />
+                Video {day.videoRange}
+              </span>
+            )}
+            <span className={`chip ${completed ? "chip-success" : "chip-upcoming"}`}>
+              {completed ? <FiCheckCircle /> : <FiFlag />}
+              {completed ? "Completed" : day.type === "revision" ? "Revision Day" : day.type === "final-revision" ? "Final Revision" : "In Progress"}
+            </span>
+          </>
         }
       />
 
@@ -206,7 +247,7 @@ export default function DayPage() {
             <span className="day-summary-hint">
               {isRevision || isFinal
                 ? "Finish your revision tasks to build consistency — then mark the day complete."
-                : "Complete all problems to finish this day automatically — or mark it complete if you finished studying elsewhere."}
+                : `Complete all ${course.unit.toLowerCase()} to finish this day automatically — or mark it complete if you finished studying elsewhere.`}
             </span>
           )}
         </div>
@@ -234,6 +275,19 @@ export default function DayPage() {
             </p>
           </div>
         </div>
+      )}
+
+      {day.learnTopics && day.learnTopics.length > 0 && (
+        <Card
+          title="Learn Today"
+          subtitle={day.videoRange ? `Covered in the course video (${day.videoRange}).` : "Topics covered today."}
+        >
+          <ul className="learn-topics">
+            {day.learnTopics.map((topic) => (
+              <li key={topic}>{topic}</li>
+            ))}
+          </ul>
+        </Card>
       )}
 
       {isRevision && (
@@ -315,38 +369,50 @@ export default function DayPage() {
       )}
 
       {!isRevision && !isMixed && !isFinal && (
-        <div className="problem-list">
-          {problems.map((problem) => (
-            <ProblemCard
-              key={problem.progressKey}
-              problem={problem}
-              solved={isProblemSolved(data, problem.progressKey)}
-              review={isProblemReview(data, problem.progressKey)}
-              note={data.notes[problem.progressKey]}
-              onToggleSolved={() => toggleSolved(problem)}
-              onToggleReview={() => toggleReview(problem)}
-              onClearNote={() => saveNote(problem.progressKey, "")}
-              onNoteChange={(text) => saveNote(problem.progressKey, text)}
-            />
-          ))}
-        </div>
+        <>
+          {isReact && problems.length > 0 && (
+            <div className="day-list-heading">
+              <h2>{course.unit} to Complete</h2>
+              <span>Mark each {course.unit.toLowerCase()} done as you finish it</span>
+            </div>
+          )}
+          <div className="problem-list">
+            {problems.map((problem) => (
+              <ProblemCard
+                key={problem.progressKey}
+                problem={problem}
+                solved={isProblemSolved(data, problem.progressKey)}
+                review={isProblemReview(data, problem.progressKey)}
+                note={data.notes[problem.progressKey]}
+                onToggleSolved={() => toggleSolved(problem)}
+                onToggleReview={() => toggleReview(problem)}
+                onClearNote={() => saveNote(problem.progressKey, "")}
+                onNoteChange={(text) => saveNote(problem.progressKey, text)}
+              />
+            ))}
+          </div>
+        </>
       )}
 
       <div className="day-footer">
-        <Link to={`/day/${day.day - 1}`} className={`btn btn-ghost ${day.day <= 1 ? "disabled" : ""}`}>
-          <FiChevronLeft />
-          Day {day.day - 1}
-        </Link>
-        {day.day < 45 &&
-          (canStartDay(data, day.day + 1) ? (
-            <Link to={`/day/${day.day + 1}`} className="btn btn-ghost">
-              Day {day.day + 1}
+        {prevDay ? (
+          <Link to={`/day/${prevDay.day}`} state={{ from: location.pathname }} className="btn btn-ghost">
+            <FiChevronLeft />
+            Day {prevDay.day}
+          </Link>
+        ) : (
+          <span />
+        )}
+        {nextDay &&
+          (canStartDay(data, nextDay) ? (
+            <Link to={`/day/${nextDay.day}`} state={{ from: location.pathname }} className="btn btn-ghost">
+              Day {nextDay.day}
               <FiChevronLeft style={{ transform: "rotate(180deg)" }} />
             </Link>
           ) : (
             <span className="btn btn-ghost disabled" title="Unlocks tomorrow — one day per calendar day">
               <FiLock />
-              Day {day.day + 1} unlocks tomorrow
+              Day {nextDay.day} unlocks tomorrow
             </span>
           ))}
       </div>

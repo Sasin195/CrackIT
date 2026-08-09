@@ -1,4 +1,4 @@
-import { ROADMAP, getAllProblems, getDayProblems, DIFFICULTY_ORDER, TOPICS } from "../data/roadmap.js";
+import { DSA, getAllProblems, getDayProblems, DIFFICULTY_ORDER, TOPICS } from "../data/roadmap.js";
 import { todayDateKey, yesterdayDateKey, clamp } from "./helpers.js";
 
 export function isProblemSolved(data, key) {
@@ -9,24 +9,42 @@ export function isProblemReview(data, key) {
   return data.reviews[key] === "needs-review";
 }
 
-export function isDayCompleted(data, dayNumber) {
-  return Boolean(data.days?.[dayNumber]?.completed);
+export function isCourseStarted(data, courseId = data.settings.course) {
+  if (data.settings?.started?.[courseId]) return true;
+  const prefix = courseId === "dsa" ? "" : `${courseId}:`;
+  const hasDays = Object.keys(data.days || {}).some(
+    (key) => key.startsWith(prefix) && data.days[key]?.completed
+  );
+  const hasProblems = Object.keys(data.progress || {}).some((key) => key.startsWith(prefix));
+  return hasDays || hasProblems;
 }
 
-export function getDayCompletedToday(data, today = todayDateKey()) {
-  if (data.todayCompleted && data.todayCompleted.date === today) {
-    return data.todayCompleted.day;
+export function isDayCompleted(data, day) {
+  return Boolean(data.days?.[day.dayKey]?.completed);
+}
+
+export function getDayCompletedToday(data, courseId = "dsa", today = todayDateKey()) {
+  const marker = data.todayCompleted;
+  const markerCourse = marker?.course || "dsa";
+  if (marker && markerCourse === courseId && marker.date === today) {
+    return marker.day;
   }
-  for (const [dayNumber, info] of Object.entries(data.days || {})) {
-    if (info.completed && info.completedDate === today) return Number(dayNumber);
+  const prefix = courseId === "dsa" ? "" : `${courseId}:`;
+  for (const [dayKey, info] of Object.entries(data.days || {})) {
+    if (!dayKey.startsWith(prefix)) continue;
+    if (info.completed && info.completedDate === today) {
+      const parsed = courseId === "dsa" ? Number(dayKey) : Number(dayKey.slice(prefix.length).replace(/^day-/, ""));
+      if (Number.isFinite(parsed)) return parsed;
+    }
   }
   return null;
 }
 
-export function canStartDay(data, dayNumber) {
-  const completedToday = getDayCompletedToday(data);
+export function canStartDay(data, day) {
+  const courseId = day.courseId || "dsa";
+  const completedToday = getDayCompletedToday(data, courseId);
   if (completedToday === null) return true;
-  return Number(dayNumber) <= completedToday;
+  return day.day <= completedToday;
 }
 
 export function isDayCompleteFromProblems(data, day) {
@@ -55,18 +73,19 @@ export function updateStreak(streak) {
   };
 }
 
-export function getCurrentDay(data, roadmap = ROADMAP) {
-  const firstIncomplete = roadmap.find((day) => !isDayCompleted(data, day.day));
-  return firstIncomplete || roadmap[roadmap.length - 1];
+export function getCurrentDay(data, course) {
+  const firstIncomplete = course.roadmap.find((day) => !isDayCompleted(data, day));
+  return firstIncomplete || course.roadmap[course.roadmap.length - 1];
 }
 
-export function isChallengeComplete(data, roadmap = ROADMAP) {
-  return roadmap.every((day) => isDayCompleted(data, day.day));
+export function isChallengeComplete(data, course) {
+  return course.roadmap.every((day) => isDayCompleted(data, day));
 }
 
-export function calculateProgress(data, roadmap = ROADMAP) {
+export function calculateProgress(data, course) {
+  const roadmap = course.roadmap;
   const totalDays = roadmap.length;
-  const daysCompleted = roadmap.filter((day) => isDayCompleted(data, day.day)).length;
+  const daysCompleted = roadmap.filter((day) => isDayCompleted(data, day)).length;
 
   const problems = getAllProblems(roadmap);
   const totalProblems = problems.length;
@@ -74,30 +93,32 @@ export function calculateProgress(data, roadmap = ROADMAP) {
   const problemsToReview = problems.filter((prob) => isProblemReview(data, prob.progressKey)).length;
 
   const difficultyStats = {};
-  for (const diff of Object.keys(DIFFICULTY_ORDER)) {
-    const list = problems.filter((prob) => prob.difficulty === diff);
-    const solved = list.filter((prob) => isProblemSolved(data, prob.progressKey)).length;
-    difficultyStats[diff] = {
-      total: list.length,
-      solved,
-      percent: list.length ? (solved / list.length) * 100 : 0
-    };
-  }
-
   const topicStats = {};
-  for (const topic of TOPICS) {
-    const list = problems.filter((prob) => prob.topic === topic);
-    const solved = list.filter((prob) => isProblemSolved(data, prob.progressKey)).length;
-    const review = list.filter((prob) => isProblemReview(data, prob.progressKey)).length;
-    topicStats[topic] = {
-      total: list.length,
-      solved,
-      review,
-      percent: list.length ? (solved / list.length) * 100 : 0
-    };
+  if (course.hasTopics) {
+    for (const diff of Object.keys(course.difficultyOrder)) {
+      const list = problems.filter((prob) => prob.difficulty === diff);
+      const solved = list.filter((prob) => isProblemSolved(data, prob.progressKey)).length;
+      difficultyStats[diff] = {
+        total: list.length,
+        solved,
+        percent: list.length ? (solved / list.length) * 100 : 0
+      };
+    }
+
+    for (const topic of course.topics) {
+      const list = problems.filter((prob) => prob.topic === topic);
+      const solved = list.filter((prob) => isProblemSolved(data, prob.progressKey)).length;
+      const review = list.filter((prob) => isProblemReview(data, prob.progressKey)).length;
+      topicStats[topic] = {
+        total: list.length,
+        solved,
+        review,
+        percent: list.length ? (solved / list.length) * 100 : 0
+      };
+    }
   }
 
-  const currentDay = getCurrentDay(data, roadmap);
+  const currentDay = getCurrentDay(data, course);
   const challengeComplete = daysCompleted === totalDays;
 
   return {
@@ -125,8 +146,8 @@ function getSimulationMistakeCounts(data) {
   return counts;
 }
 
-export function getWeakTopics(data, limit = 3, roadmap = ROADMAP) {
-  const progress = calculateProgress(data, roadmap);
+export function getWeakTopics(data, limit = 3, roadmap = DSA.roadmap) {
+  const progress = calculateProgress(data, DSA);
   const simMistakes = getSimulationMistakeCounts(data);
 
   const scored = TOPICS.map((topic) => {
@@ -149,7 +170,7 @@ export function getWeakTopics(data, limit = 3, roadmap = ROADMAP) {
   return scored.slice(0, limit);
 }
 
-export function getStudiedTopics(data, roadmap = ROADMAP) {
+export function getStudiedTopics(data, roadmap = DSA.roadmap) {
   const problems = getAllProblems(roadmap);
   const studied = new Set();
   problems.forEach((prob) => {
@@ -158,7 +179,7 @@ export function getStudiedTopics(data, roadmap = ROADMAP) {
   return [...studied];
 }
 
-export function getRevisionProblems(data, limit = 5, roadmap = ROADMAP) {
+export function getRevisionProblems(data, limit = 5, roadmap = DSA.roadmap) {
   const problems = getAllProblems(roadmap);
   const flagged = problems.filter((prob) => isProblemReview(data, prob.progressKey));
 
@@ -199,7 +220,7 @@ export function getRevisionProblems(data, limit = 5, roadmap = ROADMAP) {
   return result.slice(0, limit);
 }
 
-export function getRecommendedProblems(data, weakTopics, limit = 6, roadmap = ROADMAP) {
+export function getRecommendedProblems(data, weakTopics, limit = 6, roadmap = DSA.roadmap) {
   const weakTopicNames = new Set(weakTopics.map((item) => item.topic));
   const problems = getAllProblems(roadmap);
   const candidates = problems.filter(
@@ -221,7 +242,7 @@ export function getRecommendedProblems(data, weakTopics, limit = 6, roadmap = RO
     .slice(0, limit);
 }
 
-export function getHardestProblems(data, limit = 10, roadmap = ROADMAP) {
+export function getHardestProblems(data, limit = 10, roadmap = DSA.roadmap) {
   const problems = getAllProblems(roadmap);
   const sortScore = (prob) => {
     let score = DIFFICULTY_ORDER[prob.difficulty] * 100;
@@ -232,7 +253,7 @@ export function getHardestProblems(data, limit = 10, roadmap = ROADMAP) {
   return [...problems].sort((a, b) => sortScore(b) - sortScore(a)).slice(0, limit);
 }
 
-export function getDayWeakProblems(data, dayNumber, limit, roadmap = ROADMAP) {
+export function getDayWeakProblems(data, dayNumber, limit, roadmap = DSA.roadmap) {
   const day = roadmap.find((d) => d.day === dayNumber);
   if (!day) return [];
   if (day.type === "mixed") {
@@ -252,7 +273,7 @@ export function getSimulationAccuracy(data) {
   return total ? Math.round((correct / total) * 1000) / 10 : 0;
 }
 
-export function computeTopicPie(data, roadmap = ROADMAP) {
-  const progress = calculateProgress(data, roadmap);
+export function computeTopicPie(data, roadmap = DSA.roadmap) {
+  const progress = calculateProgress(data, DSA);
   return progress.topicStats;
 }

@@ -29,21 +29,23 @@ export default function ProblemCard({
       </div>
 
       <div className="problem-actions">
-        <a
-          href={leetcodeUrl(problem.slug)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost btn-sm"
-        >
-          <FiExternalLink />
-          Open LeetCode
-        </a>
+        {problem.slug && (
+          <a
+            href={leetcodeUrl(problem.slug)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost btn-sm"
+          >
+            <FiExternalLink />
+            Open LeetCode
+          </a>
+        )}
         <button
           onClick={onToggleSolved}
           className={cn("btn btn-sm", solved ? "btn-outline" : "btn-primary")}
         >
           {solved ? <FiCheck /> : <FiCircle />}
-          {solved ? "Mark Unsolved" : "Mark Solved"}
+          {problem.courseId === "react" ? (solved ? "Mark Undone" : "Mark Done") : (solved ? "Mark Unsolved" : "Mark Solved")}
         </button>
         <button
           onClick={onToggleReview}

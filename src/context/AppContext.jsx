@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { getAppData, saveAppData, DEFAULT_DATA, normalizeData } from "../utils/storage.js";
 import { updateStreak, getDayCompletedToday } from "../utils/progress.js";
-import { ROADMAP } from "../data/roadmap.js";
+import { getCourse } from "../data/roadmap.js";
 import { todayDateKey, uid } from "../utils/helpers.js";
 import { toast } from "../utils/toast.js";
 
@@ -25,26 +25,28 @@ export function AppProvider({ children }) {
     else delete progress[progressKey];
     let next = { ...current, progress };
 
+    const course = getCourse(current.settings.course);
     let dayBlocked = false;
-    const match = /^day(\d+)-problem\d+$/.exec(progressKey);
+    const match = /^(?:(\w+):)?day(\d+)-problem\d+$/.exec(progressKey);
     if (match && solved) {
-      const dayNumber = Number(match[1]);
-      const day = ROADMAP.find((d) => d.day === dayNumber);
+      const courseId = match[1] || "dsa";
+      const dayNumber = Number(match[2]);
+      const day = course.roadmap.find((d) => d.day === dayNumber);
       if (
         day &&
         day.problems &&
         day.problems.length > 0 &&
         day.problems.every((problem) => progress[problem.progressKey])
       ) {
-        const completedToday = getDayCompletedToday(next);
+        const completedToday = getDayCompletedToday(next, courseId);
         if (completedToday === null || completedToday === dayNumber) {
           next = {
             ...next,
             days: {
               ...next.days,
-              [dayNumber]: { completed: true, completedDate: todayDateKey(), mode: "auto" }
+              [day.dayKey]: { completed: true, completedDate: todayDateKey(), mode: "auto" }
             },
-            todayCompleted: { day: dayNumber, date: todayDateKey() },
+            todayCompleted: { course: courseId, day: dayNumber, date: todayDateKey() },
             streak: updateStreak(next.streak)
           };
         } else {
@@ -54,7 +56,7 @@ export function AppProvider({ children }) {
     }
     setData(bump(next));
     if (dayBlocked) {
-      toast(`You already completed Day ${getDayCompletedToday(next)} today — come back tomorrow to keep your streak alive!`, "warning");
+      toast(`You already completed Day ${getDayCompletedToday(next, course.id)} today — come back tomorrow to keep your streak alive!`, "warning");
     } else {
       toast(solved ? "Marked as solved" : "Marked as not solved", solved ? "success" : "info");
     }
@@ -90,33 +92,55 @@ export function AppProvider({ children }) {
 
   const completeDay = useCallback((dayNumber, mode = "auto") => {
     const current = dataRef.current;
-    if (current.days[dayNumber]?.completed) return;
-    const completedToday = getDayCompletedToday(current);
-    if (completedToday !== null && completedToday !== Number(dayNumber)) {
+    const course = getCourse(current.settings.course);
+    const day = course.roadmap.find((d) => d.day === dayNumber);
+    if (!day) return;
+    if (current.days[day.dayKey]?.completed) return;
+    const completedToday = getDayCompletedToday(current, course.id);
+    if (completedToday !== null && completedToday !== dayNumber) {
       toast(`Day ${completedToday} already completed today — come back tomorrow to keep your streak alive!`, "warning");
       return;
     }
     const streak = updateStreak(current.streak);
+    const progress = { ...current.progress };
+    const isDynamic = day.type === "mixed" || day.type === "simulation";
+    let marked = 0;
+    if (!isDynamic) {
+      (day.problems || []).forEach((problem) => {
+        if (!progress[problem.progressKey]) {
+          progress[problem.progressKey] = "solved";
+          marked += 1;
+        }
+      });
+    }
     setData(
       bump({
         ...current,
+        progress,
         days: {
           ...current.days,
-          [dayNumber]: { completed: true, completedDate: todayDateKey(), mode }
+          [day.dayKey]: { completed: true, completedDate: todayDateKey(), mode }
         },
-        todayCompleted: { day: dayNumber, date: todayDateKey() },
+        todayCompleted: { course: course.id, day: dayNumber, date: todayDateKey() },
         streak
       })
     );
-    toast(`Day ${dayNumber} completed! 🔥 ${streak.current}-day streak`, "success");
+    toast(
+      marked > 0
+        ? `Day ${dayNumber} completed! ${marked} ${course.unit.toLowerCase()} marked done. 🔥 ${streak.current}-day streak`
+        : `Day ${dayNumber} completed! 🔥 ${streak.current}-day streak`,
+      "success"
+    );
   }, []);
 
   const uncompleteDay = useCallback((dayNumber) => {
-    setData((current) => {
-      const days = { ...current.days };
-      delete days[dayNumber];
-      return bump({ ...current, days });
-    });
+    const current = dataRef.current;
+    const course = getCourse(current.settings.course);
+    const day = course.roadmap.find((d) => d.day === dayNumber);
+    if (!day) return;
+    const days = { ...current.days };
+    delete days[day.dayKey];
+    setData(bump({ ...current, days }));
     toast(`Day ${dayNumber} reopened`, "info");
   }, []);
 
@@ -145,11 +169,36 @@ export function AppProvider({ children }) {
     );
   }, []);
 
+  const setCourse = useCallback((courseId) => {
+    setData((current) =>
+      bump({
+        ...current,
+        settings: { ...current.settings, course: courseId }
+      })
+    );
+  }, []);
+
+  const startCourse = useCallback((courseId) => {
+    setData((current) =>
+      bump({
+        ...current,
+        settings: {
+          ...current.settings,
+          started: { ...current.settings.started, [courseId]: true }
+        }
+      })
+    );
+    toast("Challenge started — Day 1 unlocked! 🔥", "success");
+  }, []);
+
   const resetProgress = useCallback(() => {
     setData((current) =>
       bump({
         ...DEFAULT_DATA,
-        settings: current.settings,
+        settings: {
+          ...current.settings,
+          started: { dsa: false, react: false }
+        },
         simulations: current.simulations
       })
     );
@@ -159,7 +208,10 @@ export function AppProvider({ children }) {
     setData((current) =>
       bump({
         ...DEFAULT_DATA,
-        settings: current.settings
+        settings: {
+          ...current.settings,
+          started: { dsa: false, react: false }
+        }
       })
     );
   }, []);
@@ -189,6 +241,8 @@ export function AppProvider({ children }) {
     uncompleteDay,
     recordSimulation,
     setTheme,
+    setCourse,
+    startCourse,
     resetProgress,
     resetPlan,
     importData

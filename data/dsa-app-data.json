@@ -1,4 +1,7 @@
 {
+  "courseId": "dsa",
+  "title": "45-Day DSA Placement Prep",
+  "subtitle": "DSA for coding interviews and placements",
   "topics": [
     "Arrays",
     "Strings",
