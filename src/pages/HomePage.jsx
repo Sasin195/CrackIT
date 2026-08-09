@@ -96,7 +96,7 @@ export default function HomePage() {
           )}
           {nextDayLocked ? (
             <>
-              <Link to={`/day/${focusDay.day}`} className="btn btn-primary btn-block">
+              <Link to={`/day/${focusDay.day}`} state={{ from: "/" }} className="btn btn-primary btn-block">
                 Review Today's Plan
                 <FiArrowRight />
               </Link>
@@ -108,6 +108,7 @@ export default function HomePage() {
           ) : (
             <Link
               to={focusDay.type === "simulation" ? "/placement" : `/day/${focusDay.day}`}
+              state={{ from: "/" }}
               className="btn btn-primary btn-block"
             >
               {isFocusCompleted ? "Review Today's Plan" : "Continue Today's Plan"}

@@ -14,6 +14,9 @@ export function isDayCompleted(data, dayNumber) {
 }
 
 export function getDayCompletedToday(data, today = todayDateKey()) {
+  if (data.todayCompleted && data.todayCompleted.date === today) {
+    return data.todayCompleted.day;
+  }
   for (const [dayNumber, info] of Object.entries(data.days || {})) {
     if (info.completed && info.completedDate === today) return Number(dayNumber);
   }

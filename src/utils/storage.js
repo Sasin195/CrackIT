@@ -15,6 +15,7 @@ export const DEFAULT_DATA = {
     theme: "system"
   },
   planCompletedAt: null,
+  todayCompleted: null,
   _meta: {
     lastModifiedAt: null
   }
@@ -30,7 +31,8 @@ export function normalizeData(parsed) {
     days: { ...(parsed.days || {}) },
     simulations: Array.isArray(parsed.simulations) ? parsed.simulations : [],
     streak: { ...structuredClone(DEFAULT_DATA.streak), ...(parsed.streak || {}) },
-    settings: { ...structuredClone(DEFAULT_DATA.settings), ...(parsed.settings || {}) }
+    settings: { ...structuredClone(DEFAULT_DATA.settings), ...(parsed.settings || {}) },
+    todayCompleted: parsed.todayCompleted || null
   };
 }
 

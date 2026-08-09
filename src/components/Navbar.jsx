@@ -1,10 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { getCurrentDay } from "../utils/progress.js";
 import { todayDateKey, formatDate } from "../utils/helpers.js";
 
 export default function Navbar() {
   const { data } = useApp();
+  const location = useLocation();
   const currentDay = getCurrentDay(data);
   return (
     <header className="navbar">
@@ -16,7 +17,7 @@ export default function Navbar() {
       </div>
       <div className="navbar-actions">
         <span className="navbar-date-chip">{formatDate(todayDateKey())}</span>
-        <NavLink to={`/day/${currentDay.day}`} className="navbar-day-chip">
+        <NavLink to={`/day/${currentDay.day}`} state={{ from: location.pathname }} className="navbar-day-chip">
           Day {currentDay.day}
         </NavLink>
       </div>

@@ -56,7 +56,7 @@ export default function DayCard({ day, data, isCurrent, locked }) {
   }
 
   return (
-    <Link to={linkTo} className={cn("day-card", status.tone, isCurrent && "current")}>
+    <Link to={linkTo} state={{ from: "/roadmap" }} className={cn("day-card", status.tone, isCurrent && "current")}>
       {content}
     </Link>
   );

@@ -44,6 +44,7 @@ export function AppProvider({ children }) {
               ...next.days,
               [dayNumber]: { completed: true, completedDate: todayDateKey(), mode: "auto" }
             },
+            todayCompleted: { day: dayNumber, date: todayDateKey() },
             streak: updateStreak(next.streak)
           };
         } else {
@@ -103,6 +104,7 @@ export function AppProvider({ children }) {
           ...current.days,
           [dayNumber]: { completed: true, completedDate: todayDateKey(), mode }
         },
+        todayCompleted: { day: dayNumber, date: todayDateKey() },
         streak
       })
     );

@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   FiCheckCircle,
   FiStar,
@@ -91,6 +91,7 @@ function RevisionItem({ problem, data, onReSolved, onUnderstood, onKeep, onNoteC
 export default function DayPage() {
   const { dayNumber } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { data, setProblemSolved, setProblemReview, saveNote, completeDay, uncompleteDay, markUnderstood } = useApp();
 
   const day = ROADMAP.find((d) => d.day === Number(dayNumber));
@@ -167,9 +168,9 @@ export default function DayPage() {
   return (
     <>
       <div className="back-link">
-        <Link to="/roadmap">
+        <Link to={location.state?.from || "/roadmap"}>
           <FiChevronLeft />
-          Back to Roadmap
+          {location.state?.from === "/" ? "Back to Home" : location.state?.from ? "Back" : "Back to Roadmap"}
         </Link>
       </div>
 
