@@ -20,7 +20,7 @@ export const DEFAULT_DATA = {
   }
 };
 
-function normalizeData(parsed) {
+export function normalizeData(parsed) {
   return {
     ...structuredClone(DEFAULT_DATA),
     ...parsed,

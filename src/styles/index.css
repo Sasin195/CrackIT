@@ -1592,6 +1592,15 @@ a.settings-row:hover {
   color: var(--text-muted);
   flex-shrink: 0;
 }
+.settings-row-danger .settings-row-icon {
+  color: var(--danger);
+}
+.settings-row-danger .settings-row-title {
+  color: var(--danger);
+}
+.settings-file-input {
+  display: none;
+}
 
 /* ============================================================
    Modal

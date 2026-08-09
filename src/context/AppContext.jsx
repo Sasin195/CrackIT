@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
-import { getAppData, saveAppData, DEFAULT_DATA } from "../utils/storage.js";
+import { getAppData, saveAppData, DEFAULT_DATA, normalizeData } from "../utils/storage.js";
 import { updateStreak, getDayCompletedToday } from "../utils/progress.js";
 import { ROADMAP } from "../data/roadmap.js";
 import { todayDateKey, uid } from "../utils/helpers.js";
@@ -162,6 +162,21 @@ export function AppProvider({ children }) {
     );
   }, []);
 
+  const importData = useCallback((raw) => {
+    let parsed;
+    if (typeof raw === "string") {
+      parsed = JSON.parse(raw);
+    } else {
+      parsed = raw;
+    }
+    if (!parsed || typeof parsed !== "object") {
+      throw new Error("Invalid data file");
+    }
+    const normalized = normalizeData(parsed);
+    setData(bump(normalized));
+    return true;
+  }, []);
+
   const value = {
     data,
     setProblemSolved,
@@ -173,7 +188,8 @@ export function AppProvider({ children }) {
     recordSimulation,
     setTheme,
     resetProgress,
-    resetPlan
+    resetPlan,
+    importData
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
