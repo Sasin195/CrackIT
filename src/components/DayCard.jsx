@@ -3,7 +3,7 @@ import { FiCheckCircle, FiPlay, FiClock, FiArrowRight, FiLock } from "react-icon
 import { getDayProblemStats, isDayCompleted } from "../utils/progress.js";
 import { cn } from "../utils/helpers.js";
 
-export default function DayCard({ day, data, isCurrent, locked }) {
+export default function DayCard({ day, data, isCurrent, locked, readOnly = false }) {
   const completed = isDayCompleted(data, day);
   const stats = getDayProblemStats(data, day);
   const isRevision = day.type === "revision";
@@ -45,14 +45,16 @@ export default function DayCard({ day, data, isCurrent, locked }) {
           </div>
         </div>
       )}
-      <span className="day-cta">
-        {completed ? "Review day" : locked ? "Unlocks tomorrow" : isCurrent ? "Start today" : "Open day"}
-        <FiArrowRight />
-      </span>
+      {!readOnly && (
+        <span className="day-cta">
+          {completed ? "Review day" : locked ? "Unlocks tomorrow" : isCurrent ? "Start today" : "Open day"}
+          <FiArrowRight />
+        </span>
+      )}
     </>
   );
 
-  if (locked) {
+  if (locked || readOnly) {
     return <div className={cn("day-card", status.tone)}>{content}</div>;
   }
 

@@ -152,7 +152,7 @@ export default function SettingsPage() {
             </span>
             <span className="settings-version">v1.0.0</span>
           </div>
-          <Link className="settings-row" to="/roadmap">
+          <Link className="settings-row" to="/roadmap/preview">
             <FiInfo className="settings-row-icon" />
             <span className="settings-row-text">
               <span className="settings-row-title">View Roadmap</span>

@@ -7,7 +7,7 @@ import DayCard from "../components/DayCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 
-export default function RoadmapPage() {
+export default function RoadmapPage({ readOnly = false }) {
   const { data } = useApp();
   const course = getCourse(data.settings.course);
   const roadmap = course.roadmap;
@@ -15,11 +15,19 @@ export default function RoadmapPage() {
   const currentDayNumber = getCurrentDay(data, course).day;
   const started = isCourseStarted(data, course.id);
 
+  const note = readOnly
+    ? `${course.totalDays} days planned across the ${course.title}.`
+    : !started
+      ? "Start the challenge to begin tracking — Day 1 unlocks when you press Start."
+      : progress.challengeComplete
+        ? "🏆 All days completed — congratulations!"
+        : `You're currently on Day ${currentDayNumber}.`;
+
   return (
     <>
       <PageHeader
         title={`${course.totalDays}-Day Roadmap`}
-        subtitle="Follow the plan day by day. Review any previous day at any time."
+        subtitle={readOnly ? "A read-only overview of the full plan." : "Follow the plan day by day. Review any previous day at any time."}
       />
 
       <div className="roadmap-summary card">
@@ -31,18 +39,10 @@ export default function RoadmapPage() {
           <strong>{Math.round(progress.daysPercent)}%</strong>
         </div>
         <ProgressBar percent={progress.daysPercent} />
-        <p className="roadmap-summary-note">
-          {!started ? (
-            "Start the challenge to begin tracking — Day 1 unlocks when you press Start."
-          ) : progress.challengeComplete ? (
-            "🏆 All days completed — congratulations!"
-          ) : (
-            `You're currently on Day ${currentDayNumber}.`
-          )}
-        </p>
+        <p className="roadmap-summary-note">{note}</p>
       </div>
 
-      {!started && (
+      {!readOnly && !started && (
         <div className="roadmap-lock-note">
           <FiLock />
           <span>
@@ -52,7 +52,7 @@ export default function RoadmapPage() {
         </div>
       )}
 
-      {started && getDayCompletedToday(data, course.id) !== null && (
+      {!readOnly && started && getDayCompletedToday(data, course.id) !== null && (
         <div className="roadmap-lock-note">
           <FiLock />
           <span>
@@ -67,6 +67,7 @@ export default function RoadmapPage() {
             key={day.day}
             day={day}
             data={data}
+            readOnly={readOnly}
             isCurrent={day.day === currentDayNumber}
             locked={!started || !canStartDay(data, day)}
           />
