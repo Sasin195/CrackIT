@@ -1,13 +1,23 @@
 {
-  "name": "dsa-placement-app",
+  "name": "crackit",
   "version": "1.0.0",
   "private": true,
-  "description": "45-Day DSA Placement Preparation - offline React app with localStorage",
+  "type": "module",
+  "description": "45-Day DSA Placement Prep - static React app with localStorage",
   "scripts": {
-    "preinstall": "npm install --prefix client",
-    "start": "node serve.js",
-    "dev": "npm run dev --prefix client",
-    "build": "npm run build --prefix client",
-    "preview": "npm run preview --prefix client"
+    "start": "node serve.cjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
   }
 }

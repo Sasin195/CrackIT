@@ -1,4 +1,4 @@
-# 45-Day DSA Placement Prep
+﻿# 45-Day DSA Placement Prep
 
 A modern, responsive **DSA Placement Preparation** web app for final-year BTech students preparing for coding interviews and placements.
 
@@ -23,39 +23,37 @@ Build DSA confidence for placements — one day at a time.
 | Layer     | Technology                              |
 | --------- | --------------------------------------- |
 | Frontend  | React 18, React Router DOM, React Icons, Vite |
-| Local server | Node.js (stdlib only, no dependencies) — `serve.js` |
+| Local server | Node.js (stdlib only, no dependencies) — `serve.cjs` |
 | Database  | None — progress lives in browser `localStorage` |
 
-Data model: the entire app state is saved to `localStorage` on every change (instant, offline). The content (roadmap/topics) is bundled into the build at compile time from `client/data/dsa-app-data.json`. There is no account, no server database, and nothing is sent to any remote server.
+Data model: the entire app state is saved to `localStorage` on every change (instant, offline). The content (roadmap/topics) is bundled into the build at compile time from `data/dsa-app-data.json`. There is no account, no server database, and nothing is sent to any remote server.
 
 ## Project Structure
 
 ```text
 dsa-placement-app/
 │
-├── client/                  # the whole deployable web app (Vercel root)
-│   ├── data/
-│   │   └── dsa-app-data.json   # app content (roadmap/topics) — bundled at build time
-│   ├── src/
-│   │   ├── components/    # reusable UI components
-│   │   ├── context/       # global state (AppContext)
-│   │   ├── data/          # roadmap loader (reads data/dsa-app-data.json)
-│   │   ├── hooks/         # theme hook
-│   │   ├── pages/         # route pages
-│   │   ├── styles/        # global CSS with light/dark themes
-│   │   ├── utils/         # progress logic, storage, helpers, toasts
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── vercel.json        # SPA rewrites (all routes → index.html)
-│   ├── vite.config.js     # aliases @appdata → data
-│   └── package.json
-│
-├── serve.js               # local static server: serves the built site (npm start)
+├── data/
+│   └── dsa-app-data.json   # app content (roadmap/topics) — bundled at build time
+├── src/
+│   ├── components/         # reusable UI components
+│   ├── context/            # global state (AppContext)
+│   ├── data/               # roadmap loader (reads data/dsa-app-data.json)
+│   ├── hooks/              # theme hook
+│   ├── pages/              # route pages
+│   ├── styles/             # global CSS with light/dark themes
+│   ├── utils/              # progress logic, storage, helpers, toasts
+│   ├── App.jsx
+│   └── main.jsx
+├── index.html
+├── vercel.json             # SPA rewrites (all routes → index.html)
+├── vite.config.js          # aliases @appdata → data
+├── serve.cjs               # local static server: serves the built site (npm start)
+├── package.json
 └── README.md
 ```
 
-## The Data File (`client/data/dsa-app-data.json`)
+## The Data File (`data/dsa-app-data.json`)
 
 This file holds the **app content**:
 
@@ -78,7 +76,7 @@ Requirements: Node.js 18+.
 
 ```bash
 cd dsa-placement-app
-npm install --prefix client
+npm install
 ```
 
 ### 2. Build once (only needed the first time)
@@ -107,26 +105,21 @@ This starts a tiny local server and opens the website in your browser at `http:/
 
 This is a static site — no backend. Each visitor's progress is saved in their own browser's `localStorage`, so the deployed site works exactly like the local one.
 
-- **Root Directory:** `client`
+Vercel auto-detects everything — no custom settings needed:
+
+- **Root Directory:** (repo root — leave empty)
 - **Framework Preset:** Vite (auto-detected)
 - **Build Command:** `npm run build` (default)
 - **Output Directory:** `dist` (default)
-- SPA routing is handled by `client/vercel.json` (all routes rewritten to `index.html`)
+- SPA routing is handled by `vercel.json` (all routes rewritten to `index.html`)
 
-Deploy from the command line (from the `client` folder):
+Import the GitHub repository in the [Vercel dashboard](https://vercel.com) and accept all defaults.
 
-```bash
-cd client
-npx vercel --prod
-```
-
-Or import the `dsa-placement-app` folder in the [Vercel dashboard](https://vercel.com) and set the root directory to `client`.
-
-> **Note:** Content edits (`client/data/dsa-app-data.json`) require a rebuild/redeploy. Progress never touches the server.
+> **Note:** Content edits (`data/dsa-app-data.json`) require a rebuild/redeploy. Progress never touches the server.
 
 ## Production Build
 
 ```bash
-npm run build    # builds client into client/dist
+npm run build    # builds into dist/
 npm start        # serves the built site locally
 ```

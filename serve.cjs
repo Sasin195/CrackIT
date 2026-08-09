@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const DIST = path.join(__dirname, 'client', 'dist');
+const DIST = path.join(__dirname, 'dist');
 const PORT = 5173;
 
 const MIME = {
