@@ -17,8 +17,9 @@ import {
   calculateProgress,
   isDayCompleted,
   getDayProblemStats,
-  canStartDay
+  getDayCompletedToday
 } from "../utils/progress.js";
+import { ROADMAP } from "../data/roadmap.js";
 import Card from "../components/Card.jsx";
 import StatCard from "../components/StatCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
@@ -30,7 +31,12 @@ export default function HomePage() {
   const progress = calculateProgress(data);
   const { currentDay, difficultyStats, daysPercent, daysCompleted, totalDays, problemsSolved, totalProblems, problemsToReview, challengeComplete } = progress;
 
-  const todayStats = getDayProblemStats(data, currentDay);
+  const completedToday = getDayCompletedToday(data);
+  const focusDay = completedToday !== null ? ROADMAP.find((d) => d.day === completedToday) : currentDay;
+  const isFocusCompleted = isDayCompleted(data, focusDay.day);
+  const focusStats = getDayProblemStats(data, focusDay);
+  const nextDayLocked = completedToday !== null && completedToday < totalDays;
+  const nextDay = completedToday !== null ? completedToday + 1 : null;
 
   return (
     <>
@@ -52,7 +58,7 @@ export default function HomePage() {
           <div className="progress-hero">
             <div className="progress-hero-label">
               <span>
-                Day <strong>{currentDay.day}</strong> / {totalDays}
+                Day <strong>{focusDay.day}</strong> / {totalDays}
               </span>
               <span>{Math.round(daysPercent)}% Complete</span>
             </div>
@@ -72,35 +78,41 @@ export default function HomePage() {
           <div className="today-plan-head">
             <span className="chip chip-primary">
               <FiCalendar />
-              {isDayCompleted(data, currentDay.day) ? "Completed" : "Today's Plan"}
+              {isFocusCompleted ? "Completed" : "Today's Plan"}
             </span>
-            <h2>Day {currentDay.day}</h2>
+            <h2>Day {focusDay.day}</h2>
           </div>
-          <p className="today-plan-topic">{currentDay.topic}</p>
+          <p className="today-plan-topic">{focusDay.topic}</p>
           <p className="today-plan-goal">
-            Today's Goal: {currentDay.description || `${todayStats.total} problems — solve them all`}
+            Today's Goal: {focusDay.description || `${focusStats.total} problems — solve them all`}
           </p>
-          {currentDay.type !== "revision" && currentDay.type !== "final-revision" && todayStats.total > 0 && (
+          {!isFocusCompleted && focusDay.type !== "revision" && focusDay.type !== "final-revision" && focusStats.total > 0 && (
             <div className="today-plan-progress">
               <span>
-                {todayStats.solved} / {todayStats.total} solved
+                {focusStats.solved} / {focusStats.total} solved
               </span>
-              <ProgressBar percent={todayStats.percent} size="sm" />
+              <ProgressBar percent={focusStats.percent} size="sm" />
             </div>
           )}
-          {canStartDay(data, currentDay.day) ? (
+          {nextDayLocked ? (
+            <>
+              <Link to={`/day/${focusDay.day}`} className="btn btn-primary btn-block">
+                Review Today's Plan
+                <FiArrowRight />
+              </Link>
+              <div className="today-lock-note">
+                <FiLock />
+                Day {nextDay} unlocks tomorrow — one day at a time
+              </div>
+            </>
+          ) : (
             <Link
-              to={currentDay.type === "simulation" ? "/placement" : `/day/${currentDay.day}`}
+              to={focusDay.type === "simulation" ? "/placement" : `/day/${focusDay.day}`}
               className="btn btn-primary btn-block"
             >
-              {isDayCompleted(data, currentDay.day) ? "Review Today's Plan" : "Continue Today's Plan"}
+              {isFocusCompleted ? "Review Today's Plan" : "Continue Today's Plan"}
               <FiArrowRight />
             </Link>
-          ) : (
-            <button className="btn btn-primary btn-block" disabled>
-              <FiLock />
-              Day {currentDay.day} unlocks tomorrow — one day at a time
-            </button>
           )}
         </Card>
       </div>
