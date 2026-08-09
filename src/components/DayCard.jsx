@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { FiCheckCircle, FiPlay, FiClock, FiArrowRight } from "react-icons/fi";
+import { FiCheckCircle, FiPlay, FiClock, FiArrowRight, FiLock } from "react-icons/fi";
 import { getDayProblemStats, isDayCompleted } from "../utils/progress.js";
 import { cn } from "../utils/helpers.js";
 
-export default function DayCard({ day, data, isCurrent }) {
+export default function DayCard({ day, data, isCurrent, locked }) {
   const completed = isDayCompleted(data, day.day);
   const stats = getDayProblemStats(data, day);
   const isRevision = day.type === "revision";
@@ -17,14 +17,14 @@ export default function DayCard({ day, data, isCurrent }) {
 
   const status = completed
     ? { label: "Completed", icon: FiCheckCircle, tone: "done" }
-    : isCurrent
-      ? { label: "Current", icon: FiPlay, tone: "current" }
-      : hasProblems
-        ? { label: "Upcoming", icon: FiClock, tone: "upcoming" }
+    : locked
+      ? { label: "Locked", icon: FiLock, tone: "locked" }
+      : isCurrent
+        ? { label: "Current", icon: FiPlay, tone: "current" }
         : { label: "Upcoming", icon: FiClock, tone: "upcoming" };
 
-  return (
-    <Link to={linkTo} className={cn("day-card", status.tone, isCurrent && "current")}>
+  const content = (
+    <>
       <div className="day-card-top">
         <span className="day-number">Day {day.day}</span>
         <span className={cn("day-status-chip", status.tone)}>
@@ -45,9 +45,19 @@ export default function DayCard({ day, data, isCurrent }) {
         </div>
       )}
       <span className="day-cta">
-        {completed ? "Review day" : isCurrent ? "Start today" : "Open day"}
+        {completed ? "Review day" : locked ? "Unlocks tomorrow" : isCurrent ? "Start today" : "Open day"}
         <FiArrowRight />
       </span>
+    </>
+  );
+
+  if (locked) {
+    return <div className={cn("day-card", status.tone)}>{content}</div>;
+  }
+
+  return (
+    <Link to={linkTo} className={cn("day-card", status.tone, isCurrent && "current")}>
+      {content}
     </Link>
   );
 }

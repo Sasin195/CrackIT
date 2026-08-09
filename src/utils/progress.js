@@ -20,6 +20,12 @@ export function getDayCompletedToday(data, today = todayDateKey()) {
   return null;
 }
 
+export function canStartDay(data, dayNumber) {
+  const completedToday = getDayCompletedToday(data);
+  if (completedToday === null) return true;
+  return Number(dayNumber) <= completedToday;
+}
+
 export function isDayCompleteFromProblems(data, day) {
   if (!day.problems || day.problems.length === 0) return false;
   return day.problems.every((problem) => isProblemSolved(data, problem.progressKey));

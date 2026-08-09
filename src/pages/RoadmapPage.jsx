@@ -1,7 +1,7 @@
-import { FiMap, FiCalendar } from "react-icons/fi";
+import { FiMap, FiCalendar, FiLock } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
 import { ROADMAP, TOTAL_DAYS } from "../data/roadmap.js";
-import { calculateProgress, getCurrentDay } from "../utils/progress.js";
+import { calculateProgress, getCurrentDay, canStartDay, getDayCompletedToday } from "../utils/progress.js";
 import DayCard from "../components/DayCard.jsx";
 import ProgressBar from "../components/ProgressBar.jsx";
 import PageHeader from "../components/PageHeader.jsx";
@@ -34,6 +34,15 @@ export default function RoadmapPage() {
         </p>
       </div>
 
+      {getDayCompletedToday(data) !== null && (
+        <div className="roadmap-lock-note">
+          <FiLock />
+          <span>
+            One day per calendar day — you already completed a day today. Days after it unlock tomorrow.
+          </span>
+        </div>
+      )}
+
       <div className="roadmap-grid">
         {ROADMAP.map((day) => (
           <DayCard
@@ -41,6 +50,7 @@ export default function RoadmapPage() {
             day={day}
             data={data}
             isCurrent={day.day === currentDayNumber}
+            locked={!canStartDay(data, day.day)}
           />
         ))}
       </div>

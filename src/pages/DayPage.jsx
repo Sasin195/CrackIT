@@ -24,7 +24,8 @@ import {
   getRevisionProblems,
   getDayWeakProblems,
   getHardestProblems,
-  getDayCompletedToday
+  getDayCompletedToday,
+  canStartDay
 } from "../utils/progress.js";
 import PageHeader from "../components/PageHeader.jsx";
 import Card from "../components/Card.jsx";
@@ -335,12 +336,18 @@ export default function DayPage() {
           <FiChevronLeft />
           Day {day.day - 1}
         </Link>
-        {day.day < 45 && (
-          <Link to={`/day/${day.day + 1}`} className="btn btn-ghost">
-            Day {day.day + 1}
-            <FiChevronLeft style={{ transform: "rotate(180deg)" }} />
-          </Link>
-        )}
+        {day.day < 45 &&
+          (canStartDay(data, day.day + 1) ? (
+            <Link to={`/day/${day.day + 1}`} className="btn btn-ghost">
+              Day {day.day + 1}
+              <FiChevronLeft style={{ transform: "rotate(180deg)" }} />
+            </Link>
+          ) : (
+            <span className="btn btn-ghost disabled" title="Unlocks tomorrow — one day per calendar day">
+              <FiLock />
+              Day {day.day + 1} unlocks tomorrow
+            </span>
+          ))}
       </div>
     </>
   );

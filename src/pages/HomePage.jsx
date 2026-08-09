@@ -9,13 +9,15 @@ import {
   FiStar,
   FiCalendar,
   FiArrowRight,
-  FiAward
+  FiAward,
+  FiLock
 } from "react-icons/fi";
 import { useApp } from "../context/AppContext.jsx";
 import {
   calculateProgress,
   isDayCompleted,
-  getDayProblemStats
+  getDayProblemStats,
+  canStartDay
 } from "../utils/progress.js";
 import Card from "../components/Card.jsx";
 import StatCard from "../components/StatCard.jsx";
@@ -86,13 +88,20 @@ export default function HomePage() {
               <ProgressBar percent={todayStats.percent} size="sm" />
             </div>
           )}
-          <Link
-            to={currentDay.type === "simulation" ? "/placement" : `/day/${currentDay.day}`}
-            className="btn btn-primary btn-block"
-          >
-            {isDayCompleted(data, currentDay.day) ? "Review Today's Plan" : "Continue Today's Plan"}
-            <FiArrowRight />
-          </Link>
+          {canStartDay(data, currentDay.day) ? (
+            <Link
+              to={currentDay.type === "simulation" ? "/placement" : `/day/${currentDay.day}`}
+              className="btn btn-primary btn-block"
+            >
+              {isDayCompleted(data, currentDay.day) ? "Review Today's Plan" : "Continue Today's Plan"}
+              <FiArrowRight />
+            </Link>
+          ) : (
+            <button className="btn btn-primary btn-block" disabled>
+              <FiLock />
+              Day {currentDay.day} unlocks tomorrow — one day at a time
+            </button>
+          )}
         </Card>
       </div>
 
