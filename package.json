@@ -4,6 +4,7 @@
   "private": true,
   "description": "45-Day DSA Placement Preparation - offline React app with localStorage",
   "scripts": {
+    "preinstall": "npm install --prefix client",
     "start": "node serve.js",
     "dev": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
