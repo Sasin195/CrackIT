@@ -8,6 +8,7 @@ function buildCourse(raw) {
   const roadmap = raw.roadmap.map((day) => ({
     ...day,
     courseId: id,
+    flexible: id === "react" || raw.flexible === true,
     dayKey: prefix === "" ? String(day.day) : `${prefix}day-${day.day}`,
     problems: (day.problems || []).map((problem, index) => ({
       ...problem,
@@ -21,6 +22,7 @@ function buildCourse(raw) {
     title: raw.title || id,
     subtitle: raw.subtitle || "",
     unit: id === "react" ? "Tasks" : "Problems",
+    flexible: id === "react" || raw.flexible === true,
     roadmap,
     totalDays: roadmap.length,
     topics: raw.topics || [],

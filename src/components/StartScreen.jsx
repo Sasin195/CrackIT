@@ -20,20 +20,29 @@ export default function StartScreen({ course, onStart }) {
             <span>Problems</span>
           </div>
           <div>
-            <strong>1</strong>
-            <span>Day at a time</span>
+            <strong>{course.flexible ? "∞" : "1"}</strong>
+            <span>{course.flexible ? "Flexible pace" : "Day at a time"}</span>
           </div>
         </div>
 
         <div className="start-screen-how">
           <h3>How it works</h3>
           <ul>
-            <li>
-              <FiCalendar />
-              <span>
-                <strong>One day per calendar day.</strong> You can only complete one day per day — it keeps your streak honest.
-              </span>
-            </li>
+            {course.flexible ? (
+              <li>
+                <FiCalendar />
+                <span>
+                  <strong>Learn at your own pace.</strong> No daily locks — go through as many days as you like, whenever you want.
+                </span>
+              </li>
+            ) : (
+              <li>
+                <FiCalendar />
+                <span>
+                  <strong>One day per calendar day.</strong> You can only complete one day per day — it keeps your streak honest.
+                </span>
+              </li>
+            )}
             <li>
               <FiCheckCircle />
               <span>
@@ -49,7 +58,10 @@ export default function StartScreen({ course, onStart }) {
             <li>
               <FiLock />
               <span>
-                <strong>No shortcuts.</strong> Days unlock in order — skip ahead and you'll miss the fundamentals.
+                <strong>{course.flexible ? "Everything is open." : "No shortcuts."}</strong>
+                {course.flexible
+                  ? "All days are unlocked from the start — jump in and mark tasks as you go."
+                  : " Days unlock in order — skip ahead and you'll miss the fundamentals."}
               </span>
             </li>
           </ul>

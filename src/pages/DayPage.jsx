@@ -178,7 +178,7 @@ export default function DayPage() {
   const isReact = day.courseId === "react";
 
   const completedToday = getDayCompletedToday(data, course.id);
-  const nextDayBlocked = !completed && completedToday !== null && completedToday !== day.day;
+  const nextDayBlocked = !completed && !course.flexible && completedToday !== null && completedToday !== day.day;
 
   const dayStats = getDayProblemStats(data, { ...day, problems });
 

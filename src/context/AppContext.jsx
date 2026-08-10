@@ -39,7 +39,7 @@ export function AppProvider({ children }) {
         day.problems.every((problem) => progress[problem.progressKey])
       ) {
         const completedToday = getDayCompletedToday(next, courseId);
-        if (completedToday === null || completedToday === dayNumber) {
+        if (day.flexible || completedToday === null || completedToday === dayNumber) {
           next = {
             ...next,
             days: {
@@ -97,7 +97,7 @@ export function AppProvider({ children }) {
     if (!day) return;
     if (current.days[day.dayKey]?.completed) return;
     const completedToday = getDayCompletedToday(current, course.id);
-    if (completedToday !== null && completedToday !== dayNumber) {
+    if (!day.flexible && completedToday !== null && completedToday !== dayNumber) {
       toast(`Day ${completedToday} already completed today — come back tomorrow to keep your streak alive!`, "warning");
       return;
     }

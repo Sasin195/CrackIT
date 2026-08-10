@@ -46,10 +46,10 @@ export default function HomePage() {
   const { currentDay, difficultyStats, daysPercent, daysCompleted, totalDays, problemsSolved, totalProblems, problemsToReview, challengeComplete } = progress;
 
   const completedToday = getDayCompletedToday(data, course.id);
-  const focusDay = completedToday !== null ? course.roadmap.find((d) => d.day === completedToday) : currentDay;
+  const focusDay = !course.flexible && completedToday !== null ? course.roadmap.find((d) => d.day === completedToday) : currentDay;
   const isFocusCompleted = isDayCompleted(data, focusDay);
   const focusStats = getDayProblemStats(data, focusDay);
-  const nextDayLocked = completedToday !== null && completedToday < totalDays;
+  const nextDayLocked = !course.flexible && completedToday !== null && completedToday < totalDays;
   const nextDay = completedToday !== null ? completedToday + 1 : null;
 
   return (

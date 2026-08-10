@@ -41,6 +41,7 @@ export function getDayCompletedToday(data, courseId = "dsa", today = todayDateKe
 }
 
 export function canStartDay(data, day) {
+  if (day.flexible) return true;
   const courseId = day.courseId || "dsa";
   const completedToday = getDayCompletedToday(data, courseId);
   if (completedToday === null) return true;
